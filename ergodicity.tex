@@ -1,0 +1,202 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\usepackage{palatino}
+\usepackage{helvet}
+\usepackage{times}
+\usepackage{layout}
+\usepackage[a4paper,top=2.0cm, right=2.0cm, bottom=2.0cm, left=2.0cm]{geometry}
+\usepackage{enumitem}
+\usepackage{amsthm}
+\usepackage{url}
+\usepackage{multicol,caption}
+
+\setlist{nolistsep}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{{\hvnb Colm}}
+\chead{}
+\rhead{}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+
+\newcommand*{\helvetica}{\fontfamily{phv}\selectfont}
+\newcommand*{\helveticanarrow}{\fontfamily{phv}\fontseries{mc}\selectfont}
+\newcommand*{\hvnb}{\fontfamily{phv}\fontseries{bc}\selectfont}
+\newcommand*{\palatino}{\fontfamily{ppl}\selectfont}
+\newcommand*{\timesroman}{\fontfamily{ptm}\selectfont}
+
+% Commands to produce formatted layout
+\newcommand*{\projecttitle}[1]{\begin{center}\Large\hvnb{\color{blue} #1}\end{center}}
+\newcommand*{\theauthor}[1]{\noindent  \helveticanarrow{#1}\\}
+
+
+
+% Support for multiple bibliographies
+\usepackage[sectionbib,numbers]{natbib}
+\usepackage{chapterbib}
+
+\usepackage[compact]{titlesec}
+\usepackage{lipsum}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\titleformat{\section}
+  {\large\hvnb\color{blue}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\hvnb}{\thesubsection}{1em}{}
+\titleformat{\chapter}
+  {\Large\hvnb\color{blue}}{Lecture \thechapter:}{1em}{}
+
+\newenvironment{Figure} 
+  {\par\medskip\noindent\minipage{\linewidth}}
+  {\endminipage\par\medskip}
+
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dd}[2]{\frac{d {#1}}{d {#2}}}
+\DeclareMathOperator{\sgn}{sgn}
+
+\begin{document}
+\setlength{\bibsep}{0.2pt}
+\setlength{\itemsep}{0.2pt}
+
+\helveticanarrow
+\rhead{\hvnb  28/05/2026 working notes}
+
+\projecttitle{Notes on ergodicity}
+
+%\theauthor{Colm Connaughton} 
+
+
+\begin{multicols}{2}
+
+\section{Introduction: the concept of ergodicity}
+
+Does observing a single instance of a system for a long enough time allow one to understand the statistics of a population of such systems?
+We say a system is ergodic when the answer to this question is yes.
+Ergodicity justifies generalising temporal observations of an individual experiment, agent or organism to population level statistical statements.
+It also justifies specialising population level statistical properties to statements about individual members of a population.
+The scientific study of ergodicity grew out of physics where it provided justification for the use of ensembles in statistical mechanics and out of statistics where it provided justification for the efficacy of statistical inference.
+The reason researchers needed a word for this property is that it was quickly understood by physicists, statisticians and mathematicians that it does not always hold and should therefore not be treated as an unexamined assumption.
+
+Despite the fundamental and fairly intuitive nature of the concept, it turns out to be difficult to make the notion of ergodicity mathematically precise in a way that applies to all the use cases.
+This note is my own attempt to piece together the various facets of ergodicity
+
+\section{Mathematical formulation of ergodicity for deterministic dynamical systems}
+
+\begin{itemize}
+\item Ergodicity is a property of a measure-preserving dynamical system $(\Omega, \mu, T)$ where
+\begin{itemize}
+\item $\Omega$ is the phase space - the set of all possible states the system can be in.
+\item $\mu$ is a measure which assigns a non-negative volume to any subset of the phase space
+\item $T \, :\, \Omega \mapsto \Omega$ is a map which generates dynamics in $\Omega$ by iteration:
+\begin{align}
+x_{n+1} &= T(x_n)
+\end{align}
+$T$ is required to be measure-preserving in the sense that
+\begin{align}
+\mu(T^{-1} A) & = \mu(A)
+\end{align}
+for all subsets $A \subset \Omega$. 
+It is also required to be finite in the sense that $\mu(\Omega) < \infty$. Typically we normalise so that $\mu(\Omega) = 1$.
+In many examples, the phase space is compact which makes it easier for the total measure to be finite but this is not a requirement.
+\end{itemize}
+\item 
+The definition of ergodicity which has proven most fruitful mathematically is surprisingly abstract: a measure preserving dynamical system is ergodic if the only invariant sets have measure zero or 1.
+Here invariant means $\mu(A) = A$.
+\item
+A consequence of this definition is the more familiar statement about equality of time averages and phase space averages as expressed by Birkhoff's Theorem:
+\begin{align}
+\lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x_0) = \int_\Omega f(x) d\mu(x)
+\end{align}
+for all integrable functions $f$ on $\Omega$.
+\item
+This can also be though of as a statement about recurrences (how often a trajectory revisits a set $A \subset \Omega$) : if you follow a single trajectory of the dynamical system and count how often it is in a set $A$, the proportion of iterations the trajectory is in $A$ will converge to  $\mu(A)$. That is to say recurrence frequencies are consistent with the invariant measure.
+\item
+In certain cases where $\mu(\Omega) = \infty$, it is still possible to define meaningful averages based on generalising the way recurrences are treated. This line of exploration leads to the subfield of infinite ergodic theory.
+\end{itemize}
+
+\section{Stationary stochastic processes as dynamical systems}
+
+As a physicist, one of the more difficult aspects of ergodic theory is understanding how the above notion of ergodicity developed for deterministic dynamical systems applies to stochastic processes where we tend to think of ergodicity in terms of the equality of time averages and ensemble averages.
+In the case of deterministic dynamics, randomness can be introduced only via random choice of initial conditions.
+We can then think of the measure $\mu$ (suitably normalised) as a probability measure on the phase space and we have a random dynamical system albeit with the sole source of randomness being the choice of initial condition.
+Stochastic processes on the other hand have intrinsically random dynamics for example encoded by the transition kernel of a Markov chain. 
+If we naively think of the generator of the a stochastic process as being analogous to the map $T$ in the deterministic case, the definition of ergodicity in terms of invariant sets doesn't seem natural any more since the image of any set is random.
+This is the wrong way to think about it.
+The conceptual unification of ergodicity in stochastic processes with ergodicity in deterministic dynamical systems happens is via a completely different route: the so-called shift map.
+
+The shift map is a way to construct a deterministic measure-preserving dynamical system from any {\em stationary} stochastic process.
+The notion of ergodicity described above for measure preserving dynamical systems applies directly to the shift system and the stochastic processes notion of equivalence of time averages and ensemble averages then follows for appropriate choice of observables.
+
+\begin{itemize}
+\item Suppose we have a stationary discrete time stochastic process, $(\ldots, x_{-1}, x_0, x_1, x_2,\ldots)$, where the $x_i$ are elements of an underlying state space, $S$. 
+Let us denote the stationary distribution of this process by $\pi_*$.
+\item Construct the path space, $\Omega = S^{\mathbb{Z}}$. This is the set of all possible trajectories of the stochastic process. I am deliberately calling this $\Omega$ since it is the 
+path space (not the state space, $S$) that plays the role of the phase space in the deterministic case.
+\item The law of the stochastic process induces a probability measure, $\mu$, on the path space, $\Omega$ - essentially assigning a probability to each path based on how likely it is.  
+If the process is very simple and all $x_i$ are independent then this induced measure is the product measure $\mu = \pi_*^{\mathbb{Z}}$.
+For non-trivial cases, however, the measure $\mu$ is potentially very complicated indeed since it encodes all dynamical structure, all temporal correlations and all finite-dimensional marginal distributions.
+\item
+We now define the shift operator $T\, : \, \Omega \mapsto \Omega$ on the path space. For any trajectory $\omega = (\ldots, x_{-1}, x_0, x_1, x_2,\ldots)$, the $n^\text{th}$ entry of the trajectory $T \omega$ is given by
+\begin{align}
+\left( T\omega \right) _n & =  \left( \omega \right)  = x_{n+1}.
+\end{align}
+That is to say, the shift map applied to a trajectory moves the time index forward by one step. 
+As a map of the path space, the shift map $T$ is deterministic.
+\item
+Since the original stochastic process is stationary, $x_{n+1}$ has the same distribution as $x_n$ for all $n$ (invariance of the distribution with respect to time shift is usually taken as the definition of first order stationarity.)
+This means that $T$ does not change the measure of individual trajectories or sets of trajectories and is thus measure preserving.
+\item The path space, $\Omega$, together with the induced probability measure, $\mu$ and the shift map, $T$, therefore constitutes a measure preserving dynamical system. It is ergodic if the only invariant sets are trivial.
+Note that unlike for the deterministic case where lots of different dynamics, $T$, are studies, for stochastic processes, $T$ is always the shift map (although this map obviously depends in a complicated way on the generator of the process.)
+\item
+If the shifted system is ergodic then Birkhoff's Theorem holds:
+\begin{align}
+\lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} F(T^n \omega) = \int_\Omega f(\omega) d\mu(\omega)
+\end{align}
+for any trajectory $\omega \in \Omega$ and any integrable function, $F$ on path space.
+\item 
+However, we do not usually think of time and ensemble averages over trajectories in path space.
+To obtain the more usual expression of Birkhoff's theorem for stochastic processes, we choose particular observables that pick out regular functions of single variables, $F(\omega) = f((\omega)_0)$.
+Since this observable depends only on a single corrdinate, in this case $(\omega)_0 = x_0$, the integral on the RHS only depends on the one-dimensional marginal of the path space induced measure $\mu$. 
+Moreover, since the process is stationary, this one-dimensional marginal distribution is the stationary distribution of the original stochastic process.
+We then have
+\begin{align}
+\lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x_0) = \int_S f(x) d \pi_*(x) = \mathbb{E}_{\pi_*}[f].
+\end{align}
+This is the more usual form of Birkhoff's Theorem as stated for ergodic stochastic processes.
+\item
+We can again think of this in terms of recurrences: given a set $A \subset S$ (an event) if you observe a single realisation of the stochastic process and count the proportion of time the trajectory visits the set $A$, this will converge to probability of the event $A$ under the stationary distribution of the process.
+\end{itemize}
+
+\section{Infinite ergodicity}
+
+Some nonstationary systems revisit any set infinitely often but have infinite expected return time because phase space is infinite - e.g. low dimensional random walk. Meaningful averages can be defined in such cases but infinite ergodic theory has less to do with equality of time and ensemble averages because Birkhoff's Theorem is usually trivial.
+
+\section{Nonstationary stochastic processes}
+
+Many nonstationary and non-recurrent processes are still interesting but cannot be ergodic - category error. Such processes abound in practical time series analysis and signal processing. 
+Transformations are commonly used to attempt to isolate a component of the dynamics that is stationary or ergodic (or approximately so in empirical situations) for observables of interest
+\begin{itemize}
+\item differencing
+\item detrending
+\item seasonal adjustment
+\item Box-Cox (and other transformations)
+\end{itemize}
+
+\section{Practical considerations}
+
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+
+\end{multicols}
+\end{document}
