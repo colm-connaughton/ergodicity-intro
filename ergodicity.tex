@@ -155,7 +155,7 @@ As a map of the path space, the shift map $T$ is deterministic.
 Since the original stochastic process is stationary, $x_{n+1}$ has the same distribution as $x_n$ for all $n$ (invariance of the distribution with respect to time shift is usually taken as the definition of first order stationarity.)
 This means that $T$ does not change the measure of individual trajectories or sets of trajectories and is thus measure preserving.
 \item The path space, $\Omega$, together with the induced probability measure, $\mu$ and the shift map, $T$, therefore constitutes a measure preserving dynamical system. It is ergodic if the only invariant sets are trivial.
-Note that unlike for the deterministic case where lots of different dynamics, $T$, are studies, for stochastic processes, $T$ is always the shift map (although this map obviously depends in a complicated way on the generator of the process.)
+Note that unlike for the deterministic case where lots of different dynamics, $T$, are studied, for stochastic processes, $T$ is always the shift map (although this map obviously depends in a complicated way on the generator of the process.) Similarly, the analogue of the phase space is always the path space not the underlying state space of the stochastic process.
 \item
 If the shifted system is ergodic then Birkhoff's Theorem holds:
 \begin{align}
@@ -165,7 +165,7 @@ for any trajectory $\omega \in \Omega$ and any integrable function, $F$ on path 
 \item 
 However, we do not usually think of time and ensemble averages over trajectories in path space.
 To obtain the more usual expression of Birkhoff's theorem for stochastic processes, we choose particular observables that pick out regular functions of single variables, $F(\omega) = f((\omega)_0)$.
-Since this observable depends only on a single corrdinate, in this case $(\omega)_0 = x_0$, the integral on the RHS only depends on the one-dimensional marginal of the path space induced measure $\mu$. 
+Since this observable depends only on a single coordinate, in this case $(\omega)_0 = x_0$, the integral on the RHS only depends on the one-dimensional marginal of the path space induced measure $\mu$. 
 Moreover, since the process is stationary, this one-dimensional marginal distribution is the stationary distribution of the original stochastic process.
 We then have
 \begin{align}
@@ -174,11 +174,26 @@ We then have
 This is the more usual form of Birkhoff's Theorem as stated for ergodic stochastic processes.
 \item
 We can again think of this in terms of recurrences: given a set $A \subset S$ (an event) if you observe a single realisation of the stochastic process and count the proportion of time the trajectory visits the set $A$, this will converge to probability of the event $A$ under the stationary distribution of the process.
+\item
+Give example of discrete analogue of Ornstein-Uhlenbeck process driven by Bernoulli noise:
+\begin{align}
+x_{n+1} &= a\,x_n + \xi_{n+1}
+\end{align} 
+where $\xi_n \in  \left\{+1, -1 \right\}$ with equal probability.
+For $a = \frac{1}{2}$ for example the stationary density,  $\pi_* = \text{Unif}(-2,2)$.  Time averages and ensemble averages for simple moments can be calculated explicitly and shown to agree.
+
 \end{itemize}
 
 \section{Infinite ergodicity}
+\begin{itemize}
+\item
+Some nonstationary systems revisit any set infinitely often but have infinite expected return time because phase space is infinite - e.g. low dimensional random walk. Meaningful averages can be defined in such cases.
+\item
+ Infinite ergodic theory has less to do with equality of time and ensemble averages because Birkhoff's Theorem is usually trivial because time averages tend to zero.
+\item
+Give example of simple random walk and contrast with discrete OU process.
+\end{itemize}
 
-Some nonstationary systems revisit any set infinitely often but have infinite expected return time because phase space is infinite - e.g. low dimensional random walk. Meaningful averages can be defined in such cases but infinite ergodic theory has less to do with equality of time and ensemble averages because Birkhoff's Theorem is usually trivial.
 
 \section{Nonstationary stochastic processes}
 
