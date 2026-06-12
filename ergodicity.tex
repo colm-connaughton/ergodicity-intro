@@ -68,7 +68,7 @@
 \setlength{\itemsep}{0.2pt}
 
 \helveticanarrow
-\rhead{\hvnb  28/05/2026 working notes}
+\rhead{\hvnb  12/06/2026 working notes}
 
 \projecttitle{Notes on ergodicity}
 
@@ -234,6 +234,7 @@ If we now take the limit of large $n$, the law of large numbers gives
 almost surely.
 Therefore, as $n$ gets large, a typical realisation of Eq.~(\ref{eq-GRW}) almost surely behaves like
 \begin{align}
+\label{eq-GRW-typical}
 X_n \sim X_0\, \mathrm{e}^{\lambda\,n}
 \end{align}
 where $\lambda =\mathbb{E} \left[ \log z \right]$ is often referred to as the Lyapunov exponent (since the typical difference between two different initial conditions $X_0^{(1)}$ and $X_0^{(2)}$ grows as 
@@ -249,9 +250,14 @@ Therefore as $n$ gets large
 where $\mu = \log \mathbb{E}\left[ z \right]$.
 Since the logarithm is convex, Jensen's inequality tells us that $\lambda < \mu$ in general. 
 Typical trajectories are therefore not representative of the ensemble in the sense that the expected value grows exponentially faster with $n$ than individual trajectories.
-The reason is that the expected value is dominated by large fluctuations which become exponentially rare as $n$ grows but make exponentially large contributions to the average.
-This is not interpretable as a difference of time and ensemble averages since the time average of $X_n$ is either zero or infinite (depending on the sign of $\lambda$) and the ensemble average is $n$ dependent and also becomes either zero or infinite as $n \to \infty$ (depending on the sign of $\mu$.)
-However, there is an underlying Birkhoff style ergodicity statement encoded by Eq.~(\ref{eq-limlogGRW}).
+The reason is that the expected value is dominated by large fluctuations which become exponentially rare as $n$ grows but make exponentially large contributions to the average. 
+This mechanism is not a peculiarity of the multiplicative random walk. 
+It appears in many areas of statistical physics such as localisation phenomena, glass dynamics, turbulence and random matrix products.
+The multiplicative random walk is just the simplest exactly solvable model of a phenomenon that has wide applicability.
+
+Returning to the discussion of ergodicity, the difference between individual trajectories and the ensemble averaged trajectory of the multiplicative random walk is not directly interpretable as a difference of time and ensemble averages.
+ The time average of $X_n$ is either zero or infinite (depending on the sign of $\lambda$.) The ensemble average is $n$ dependent and also becomes either zero or infinite as $n \to \infty$ (depending on the sign of $\mu$.)
+However, there {\em is} an underlying Birkhoff style ergodicity statement encoded in Eq.~(\ref{eq-limlogGRW}).
 To see this, define a new variable, 
 \begin{align}
 \lambda_n = \log X_{n+1} - \log X_{n},
@@ -261,18 +267,29 @@ From Eq.~(\ref{eq-GRW}) and the fact that the $z_i$ are iid, we note that $\math
 The left hand side of Eq.~(\ref{eq-limlogGRW}) is a telescopic sum: $\log X_n - \log X_0 = \log X_n - \log X_{n-1} + \log X_{n-1} - \ldots + \log X_1 - \log X_0$.
 Putting this together, Eq.~(\ref{eq-limlogGRW}) tells us that
 \begin{align}
+\label{eq-Birkhoff-lambda}
 \lim_{n \to \infty} \frac{1}{n} \sum_{i=0}^{n-1} \lambda_i  &= \mathbb{E}\left[ \lambda \right]. 
 \end{align}
 This is Birkhoff's theorem, but for the growth rate of $X_n$ rather than for $X_n$ itself. 
+Note what has happened here: although $X_n$ is trivially non-ergodic, by identifying a transformation of $X_n$ which does possess the ergodicity property  as per Eq.~(\ref{eq-Birkhoff-lambda}), we are able to understand the temporal behaviour of typical realisations of $X_n$ as per Eq.~(\ref{eq-GRW-typical}).
 
-Such processes abound in practical time series analysis and signal processing. 
-Transformations are commonly used to attempt to isolate a component of the dynamics that is stationary or ergodic (or approximately so in empirical situations) for observables of interest
-\begin{itemize}
-\item differencing
-\item detrending
-\item seasonal adjustment
-\item Box-Cox (and other transformations)
-\end{itemize}
+Empirical analogues of this theoretical procedure abound in practical time series analysis and signal processing. 
+Transformations are commonly used to attempt to isolate a component of the dynamics that is stationary or ergodic (or approximately so in empirical contexts) for observables of interest.
+The objective is usually to find transformations which can be used to improve some a-priori measure of predictive power.  
+In applications, detrending and/or seasonable adjustment may be applied to remove systematic drift or periodic oscillation, differencing may be applied to remove stochastic drift and data transformations may be used to stabilise variance over time.
+A very commonly used transformation for variance stabilisation is the Box-Cox transformation (which includes the log transformation discussed above as a special case):
+\begin{align}
+f_\eta(x) &= 
+\left\{
+\begin{array}{ll}
+\frac{x^{1-\eta} -1}{1- \eta} & \text{if $\eta \neq 1$} \\
+ \log x &  \text{if $\eta = 1$} 
+\end{array}
+\right.
+\end{align}
+and its generalisations. 
+Detrending, seasonal adjustment, differencing and data transformation are often combined to find quantities that best achieve this end. 
+This is reflected in the exactly solvable example of the multiplicative random walk where differencing of the log of the signal is required to obtain the quantity, $\lambda_n$, that characterises the typical behaviour of individual realisations of the process.
 
 \section{Practical considerations}
 
