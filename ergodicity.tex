@@ -204,7 +204,68 @@ Give example of simple random walk and contrast with discrete OU process.
 
 \section{Nonstationary stochastic processes}
 
-Many nonstationary and non-recurrent processes are still interesting but cannot be ergodic - category error. Such processes abound in practical time series analysis and signal processing. 
+Most nonstationary processes are not recurrent so the notion of infinite ergodicity does not apply to them. 
+Technically, it is tautological to refer to such processes as non-ergodic since nonstationarity precludes ergodicity in the original sense and non-recurrence precludes the more general notion of infinite ergodicity.
+Nevertheless in applied contexts, authors sometimes emphasise the non-ergodicity of some ``obviously non-ergodic''  nonstationary dynamics.
+This can be because the question of whether individual realisations are representative of the ensemble remains important. 
+It can also be because it is possible to find a transformation which isolates a useful ergodic component of the dynamics, either exactly or approximately.
+
+An illustrative example is provided by the multiplicative random walk:
+\begin{align}
+\label{eq-GRW}
+X_{n+1} &= z_n\,X_n
+\end{align}
+with $X_0 >0$ and the $z_i$ being iid non-negative random variables with finite mean and variance (the case $z_i \sim \text{Bernoulli}\left[\frac{3}{5}, \frac{3}{2}\right]$ is the multiplicative cointoss example.)
+We have
+\begin{align}
+X_n = X_0 \prod_{i=1}^{n-1} z_i
+\end{align}
+which is clearly nonstationary and therefore nonergodic.
+Let us take the logarithm and divide by $n$:
+\begin{align}
+\frac{\log{X_n} - \log{X_0}}{n} & = \frac{1}{n} \, \sum_{i=1}^{n-1} \log{z_i}.
+\end{align}
+Taking the logarithm transforms a multiplicative random walk into an additive random walk.
+If we now take the limit of large $n$, the law of large numbers gives
+\begin{align}
+\label{eq-limlogGRW}
+\lim_{n\to\infty} \frac{1}{n} \left( \log X_n  - \log X_0\right) = \mathbb{E} \left[ \log z \right]
+\end{align}
+almost surely.
+Therefore, as $n$ gets large, a typical realisation of Eq.~(\ref{eq-GRW}) almost surely behaves like
+\begin{align}
+X_n \sim X_0\, \mathrm{e}^{\lambda\,n}
+\end{align}
+where $\lambda =\mathbb{E} \left[ \log z \right]$ is often referred to as the Lyapunov exponent (since the typical difference between two different initial conditions $X_0^{(1)}$ and $X_0^{(2)}$ grows as 
+$\left| X_0^{(1)} - X_0^{(2)} \right|\, e^{\lambda \, n}$.
+On the other hand, since the $z_i$ are iid, the expected value of $X_n$ is given by
+\begin{align}
+\mathbb{E}\left[ X_n \right] & = X_0 \left(\mathbb{E}\left[ z \right] \right)^n.
+\end{align}
+Therefore as $n$ gets large
+\begin{align}
+\mathbb{E}\left[ X_n \right] \sim X_0 \, \mathrm{e}^{\mu\, n},
+\end{align}
+where $\mu = \log \mathbb{E}\left[ z \right]$.
+Since the logarithm is convex, Jensen's inequality tells us that $\lambda < \mu$ in general. 
+Typical trajectories are therefore not representative of the ensemble in the sense that the expected value grows exponentially faster with $n$ than individual trajectories.
+The reason is that the expected value is dominated by large fluctuations which become exponentially rare as $n$ grows but make exponentially large contributions to the average.
+This is not interpretable as a difference of time and ensemble averages since the time average of $X_n$ is either zero or infinite (depending on the sign of $\lambda$) and the ensemble average is $n$ dependent and also becomes either zero or infinite as $n \to \infty$ (depending on the sign of $\mu$.)
+However, there is an underlying Birkhoff style ergodicity statement encoded by Eq.~(\ref{eq-limlogGRW}).
+To see this, define a new variable, 
+\begin{align}
+\lambda_n = \log X_{n+1} - \log X_{n},
+\end{align}
+corresponding to the increment of $\log X_n$, or equivalently the local in time growth rate of $X_n$.
+From Eq.~(\ref{eq-GRW}) and the fact that the $z_i$ are iid, we note that $\mathbb{E}\left[ \lambda_n \right]$ is independent of $n$ and given by $\mathbb{E}\left[ \lambda \right] = \mathbb{E}\left[ \log z \right]$.
+The left hand side of Eq.~(\ref{eq-limlogGRW}) is a telescopic sum: $\log X_n - \log X_0 = \log X_n - \log X_{n-1} + \log X_{n-1} - \ldots + \log X_1 - \log X_0$.
+Putting this together, Eq.~(\ref{eq-limlogGRW}) tells us that
+\begin{align}
+\lim_{n \to \infty} \frac{1}{n} \sum_{i=0}^{n-1} \lambda_i  &= \mathbb{E}\left[ \lambda \right]. 
+\end{align}
+This is Birkhoff's theorem, but for the growth rate of $X_n$ rather than for $X_n$ itself. 
+
+Such processes abound in practical time series analysis and signal processing. 
 Transformations are commonly used to attempt to isolate a component of the dynamics that is stationary or ergodic (or approximately so in empirical situations) for observables of interest
 \begin{itemize}
 \item differencing
