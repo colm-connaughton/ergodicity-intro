@@ -118,7 +118,7 @@ A consequence of this definition is the more familiar statement about equality o
 \end{align}
 for all integrable functions $f$ on $\Omega$.
 \item
-This can also be though of as a statement about recurrences (how often a trajectory revisits a set $A \subset \Omega$) : if you follow a single trajectory of the dynamical system and count how often it is in a set $A$, the proportion of iterations the trajectory is in $A$ will converge to  $\mu(A)$. That is to say recurrence frequencies are consistent with the invariant measure.
+This can also be thought of as a statement about recurrences (how often a trajectory revisits a set $A \subset \Omega$) : if you follow a single trajectory of the dynamical system and count how often it is in a set $A$, the proportion of iterations the trajectory is in $A$ will converge to  $\mu(A)$. That is to say recurrence frequencies are consistent with the invariant measure.
 \item
 Ergodicity provides a precise notion of typicality: in an ergodic system almost all initial conditions will eventually explore the full phase space. ``Almost all'' means those atypical trajectories that don't explore the full phase space have measure zero. 
 The Goldstein and Lebowitz typicality account of ergodicity asserts that for a broad class of many body physical systems, typical trajectories correspond to thermomodynamic equilibrium states. 
@@ -192,6 +192,26 @@ For $a = \frac{1}{2}$ for example the stationary density,  $\pi_* = \text{Unif}(
 \end{itemize}
 
 \section{Infinite ergodicity}
+The phase space, $\Omega$, of a  classical ergodic system $(\Omega, \mu, T)$ has finite invariant measure: $\mu(\Omega) < \infty$, typically normalised so that $\mu(\Omega)=1$.
+A consequence is that for any set, $A \subset \Omega$, almost all trajectories visit $A$ infinitely often, and furthermore, the proportion of time spent in $A$ converges asymptotically to $\mu(A)$.
+Mathematically,  this follows from applying Birkhoff's theorem to the indicator function on $A$,  $1_A(x)$:
+\begin{align}
+\label{eq-recurrences}
+\lim_{N\to \infty} \frac{1}{N} \sum_{n=0}^{N-1} 1_A(T^n x_0) & = \int_\Omega 1_A(x) d\mu = \mu(A).
+\end{align}
+Recurrence frequencies become stable as $N$ grows and are consistent with the invariant measure. 
+Let us denote by $\tau_A$ the random variable corresponding to the time that a trajectory takes to revisit $A$ having left it.
+This is called the return time. 
+One can show that the mean return time, $\mathbb{E}\left[\tau_A\right] = \frac{1}{\mu(A)}$.
+Another way to state Eq.~(\ref{eq-recurrences}) is that for almost all sets, $A$, the number of recurrent visits to $A$ asymptotically grows proportional to $N$ : 
+\begin{align}
+ \sum_{n=0}^{N-1} 1_A(T^n x_0)  \sim c\, N
+\end{align}
+where $c>0$ is the inverse of the mean return time.
+
+Infinite ergodic theory extends some aspects of ergodic theory to systems for which, although an invariant measure exists, it is not normalisable, $\mu(\Omega) = \infty$.
+A characteristic feature of such systems is that the mean return time for almost all sets is infinite because the distribution of $\tau_A$ has sufficiently heavy tails that $\mathbb{E}\left[ \tau_A\right]$ does not exist.
+
 \begin{itemize}
 \item
 Some nonstationary systems revisit any set infinitely often but have infinite expected return time because phase space is infinite - e.g. low dimensional random walk. Meaningful averages can be defined in such cases.
