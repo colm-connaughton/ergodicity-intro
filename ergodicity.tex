@@ -277,14 +277,35 @@ S_N f \sim c \, \sqrt{N}
 where $c$ has a non-trivial (half normal?) distribution.
 Thus ordinary frequencies vanish but normalised occupation counts remain meaningful. 
 
-To avoid giving the impression that infinite ergodicity is a complicated way of describing properties of random walks that are obtainable by other means, it is worth briefly considering a completely
-different example: the Pomeau-Manneville map. 
-This is a deterministic dynamical system on a compact state space where the mechanism for generation of an infinite invariant measure is quite different.
+To avoid giving the impression that infinite ergodicity is a complicated way of describing properties of random walks that are obtainable by other means, it is worth briefly considering a second example: the Pomeau-Manneville map. 
+This is a deterministic dynamical system with a compact phase space, $\left[0,1\right]$ where infinite invariant measure arises in a very different way to the simple random walk.
 The map is
 \begin{align}
 T(x) &= x + x^{1+\alpha}\ \mod\ 1
 \end{align}
 where $x \in \left[0,1\right]$ and $\alpha>0$.
+The important feature is that the fixed point at $0$ is neutrally stable because $T^\prime(0) = 1$.
+Consequently trajectories that wander close to zero can get trapped for very long periods of time.
+How long depends on the parameter $\alpha$.
+One can show that an invariant measure exists and that near zero it behaves like
+\begin{align}
+\label{eq-PMrho}
+\rho(x) &\sim x^{-\alpha},
+\end{align}
+which reflects the fact that trajectories have a tendency to accumulate in the vicinity of the ``sticky'' neutral fixed point.
+If we consider a set which does not include the neutral fixed point at $0$, for example $A = \left[ \frac{1}{4}, \frac{3}{4}\right]$, it is possible to show that the distribution of the return time, $\tau_A$, has power law tails:
+\begin{align}
+\mathbb{P}(\tau_A > n) & \sim n^{-\frac{1}{\alpha}}.
+\end{align}
+These tails are the result of some trajectories getting trapped near the fixed point and taking a long time to escape.
+The parameter value $\alpha=1$ is special. 
+If $\alpha <1$ the return time distribution is still integrable, the invariant measure is finite and ordinary ergodic theory applies. 
+If $\alpha >=1$, the mean return time diverges and we enter the infinite ergodic theory regime.
+Note from Eq.~(\ref{eq-PMrho}) that the invariant measure becomes infinite since $\int_0^\epsilon \rho(x)\,dx$ diverges for any $\epsilon > 0$.
+In this example, infinite measure arises due to the loss of an integrable singularity at a single point in phase space rather than due to trajectories spreading out over infinitely large regions in the case of the random walk example. 
+Nevertheless many of the same phenomena are observed as we noted for the random walk example.
+Cumulative occupation counts again scale sub-linearly and after appropriate normalisation converge to a nontrivial random limit.
+This is the aspect that generalises across many examples: infinite ergodic theory is fundamentally about how power law recurrence time statistics lead to persistent randomness in a broad class of deterministic and random dynamical systems.
 
 \section{Nonstationary stochastic processes}
 
