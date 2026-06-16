@@ -118,7 +118,21 @@ A consequence of this definition is the more familiar statement about equality o
 \end{align}
 for all integrable functions $f$ on $\Omega$.
 \item
-This can also be thought of as a statement about recurrences (how often a trajectory revisits a set $A \subset \Omega$) : if you follow a single trajectory of the dynamical system and count how often it is in a set $A$, the proportion of iterations the trajectory is in $A$ will converge to  $\mu(A)$. That is to say recurrence frequencies are consistent with the invariant measure.
+This can also be thought of as a statement about recurrences (how often a trajectory revisits a set $A \subset \Omega$) : if you follow a single trajectory of the dynamical system and count how often it is in a set $A$, the proportion of iterations the trajectory is in $A$ will converge to  $\mu(A)$. 
+Mathematically,  this follows from applying Birkhoff's theorem to the indicator function on $A$,  $1_A(x)$:
+\begin{align}
+\label{eq-recurrences}
+\lim_{N\to \infty} \frac{1}{N} \sum_{n=0}^{N-1} 1_A(T^n x_0) & = \int_\Omega 1_A(x) d\mu = \mu(A).
+\end{align}
+Recurrence frequencies become stable as $N$ grows and are consistent with the invariant measure. 
+Let us denote by $\tau_A$ the random variable corresponding to the time that a trajectory takes to revisit $A$ having left it.
+This is called the return time. 
+One can show that the mean return time, $\mathbb{E}\left[\tau_A\right] = \frac{1}{\mu(A)}$.
+Another way to state Eq.~(\ref{eq-recurrences}) is that for almost all sets, $A$, the number of recurrent visits to $A$ asymptotically grows proportional to $N$ : 
+\begin{align}
+ \sum_{n=0}^{N-1} 1_A(T^n x_0)  \sim c\, N
+\end{align}
+where $c>0$ is the inverse of the mean return time.
 \item
 Ergodicity provides a precise notion of typicality: in an ergodic system almost all initial conditions will eventually explore the full phase space. ``Almost all'' means those atypical trajectories that don't explore the full phase space have measure zero. 
 The Goldstein and Lebowitz typicality account of ergodicity asserts that for a broad class of many body physical systems, typical trajectories correspond to thermomodynamic equilibrium states. 
@@ -192,35 +206,85 @@ For $a = \frac{1}{2}$ for example the stationary density,  $\pi_* = \text{Unif}(
 \end{itemize}
 
 \section{Infinite ergodicity}
-The phase space, $\Omega$, of a  classical ergodic system $(\Omega, \mu, T)$ has finite invariant measure: $\mu(\Omega) < \infty$, typically normalised so that $\mu(\Omega)=1$.
-A consequence is that for any set, $A \subset \Omega$, almost all trajectories visit $A$ infinitely often, and furthermore, the proportion of time spent in $A$ converges asymptotically to $\mu(A)$.
-Mathematically,  this follows from applying Birkhoff's theorem to the indicator function on $A$,  $1_A(x)$:
+
+Infinite ergodic theory extends some aspects of ergodic theory to recurrent dynamics for which an invariant measure exists but is not normalisable, $\mu(\Omega) = \infty$.
+A characteristic feature is that almost all sets, $A \subset \Omega$,  are visited infinitely often but the mean return time, $\mathbb{E}\left[\tau_A\right]$,  is infinite. 
+Mathematically, this is happens when the distribution of $\tau_A$ has sufficiently heavy tails that $\mathbb{E}\left[ \tau_A\right]$ does not exist.
+Physically it means that for almost all sets, $A$,  the dynamics visits $A$ infinitely many times but nevertheless spends only a vanishing proportion of the {\em total} time in $A$.
+This is possible because excursions from $A$ can be very long.
+
+Birkhoff's Theorem is often trivial because time averages and recurrence frequencies tend to zero.
+Infinite ergodic theory then has less to do with equality of time and ensemble averages. 
+Instead of the time-average of an observable, $f$, the central object of study is the time cumulative sum of $f$:
 \begin{align}
-\label{eq-recurrences}
-\lim_{N\to \infty} \frac{1}{N} \sum_{n=0}^{N-1} 1_A(T^n x_0) & = \int_\Omega 1_A(x) d\mu = \mu(A).
+\label{eq-timeCumulativeSum}
+S_N f(x) &= \sum_{n=0}^{N-1} f(T^n x). 
 \end{align}
-Recurrence frequencies become stable as $N$ grows and are consistent with the invariant measure. 
-Let us denote by $\tau_A$ the random variable corresponding to the time that a trajectory takes to revisit $A$ having left it.
-This is called the return time. 
-One can show that the mean return time, $\mathbb{E}\left[\tau_A\right] = \frac{1}{\mu(A)}$.
-Another way to state Eq.~(\ref{eq-recurrences}) is that for almost all sets, $A$, the number of recurrent visits to $A$ asymptotically grows proportional to $N$ : 
+For finite ergodic systems, time cumulative sums grow linearly with $N$ at a rate which is asymptotically deterministic:
 \begin{align}
- \sum_{n=0}^{N-1} 1_A(T^n x_0)  \sim c\, N
+S_N f(x)  &\sim N \int_\Omega f d\mu.
 \end{align}
-where $c>0$ is the inverse of the mean return time.
+In infinite ergodic systems, by contrast, time cumulative sums grow sub-linearly with $N$ at a rate which remains random even asymptotically:
+\begin{align}
+S_N f(x) & \sim a_N \, \zeta
+\end{align}
+where $a_N < N$ and $\zeta$ is a random variable with a non-trivial distribution.
+The sub-linear scaling of time cumulative sums explains why ordinary time averages and recurrence frequencies go to zero in such systems. 
+Asymptotic randomness means that different trajectories retain order 1 differences forever.
+This feature makes infinite ergodic systems fundamentally different from a physical perspective.
 
-Infinite ergodic theory extends some aspects of ergodic theory to systems for which, although an invariant measure exists, it is not normalisable, $\mu(\Omega) = \infty$.
-A characteristic feature of such systems is that the mean return time for almost all sets is infinite because the distribution of $\tau_A$ has sufficiently heavy tails that $\mathbb{E}\left[ \tau_A\right]$ does not exist.
+In stochastic processes, the first example of infinite recurrence times that often comes to mind is the simple random walk on $\mathbb{Z}$.
+Does the simple random walk provides an illustrative example of infinite ergodicity. 
+I would argue this is not immediately obvious because the simple random walk is not stationary. 
+We cannot proceed as described in the previous section by taking the invariant measure to be probability measure on induced on path space by the stationary probability distribution of the stochastic process. 
+However we do not require the invariant measure to be a probability measure (normalisable). 
+What alternative does this enable?
+The transition probabilities for the simple random walk are:
+\begin{align}
+\label{eq-SRWtransitions}
+P(i,j) = \left\{
+\begin{array}{ll}
+\frac{1}{2}&\text{if $i=j+1$}\\
+\frac{1}{2}&\text{if $i=j-1$}\\
+0&\text{otherwise.}
+\end{array}
+\right.
+\end{align}
+The so-called counting measure on $\mathbb{Z}$ is defined as follows.
+For any $A \subset \mathbb{Z}$:
+\begin{align}
+\mu(A) = \left\{  
+\begin{array}{ll}
+| A | & \text{if $A$ is finite}\\
+\infty & \text{otherwise}
+\end{array}
+\right.
+\end{align}
+In particular, $\mu(\left\{ i \right\} )=1$ for all $i \in \mathbb{Z}$.
+Note that although the counting measure on $\mathbb{Z}$ is not normalisable, it is invariant with respect to the transition probabilities Eq.~(\ref{eq-SRWtransitions}):
+\begin{align*}
+\sum_{j \in \mathbb{Z}} P(i, j) \mu(\left\{ j \right\} ) &= \frac{1}{2} \mu(\left\{ i -1 \right\} ) + \frac{1}{2} \mu(\left\{ i+1 \right\} )\\
+& = \frac{1}{2} + \frac{1}{2}  = \mu(\left\{ i \right\} ).
+\end{align*}
+Physically, this simply means that at each step, there is as much probability mass entering each site  $i \in \mathbb{Z}$  from neighbouring sites as there is leaving due to hopping.
+The counting measure on $\mathbb{Z}$ can now be used to induce an invariant (but non-normalisable) measure on the path space of the simple random walk. 
+A slightly unintuitive aspect of this construction is that this induced measure on path space is stationary even though the original stochastic process is not.
+By taking $f(x) = 1_{\left\{0\right\}}(x)$ in Eq.~(\ref{eq-timeCumulativeSum}), we can count the number of visits to site $0$ after time $N$.
+From the theory of random walks one finds
+\begin{align}
+S_N f \sim c \, \sqrt{N} 
+\end{align}
+where $c$ has a non-trivial (half normal?) distribution.
+Thus ordinary frequencies vanish but normalised occupation counts remain meaningful. 
 
-\begin{itemize}
-\item
-Some nonstationary systems revisit any set infinitely often but have infinite expected return time because phase space is infinite - e.g. low dimensional random walk. Meaningful averages can be defined in such cases.
-\item
- Infinite ergodic theory has less to do with equality of time and ensemble averages because Birkhoff's Theorem is usually trivial because time averages tend to zero.
-\item
-Give example of simple random walk and contrast with discrete OU process.
-\end{itemize}
-
+To avoid giving the impression that infinite ergodicity is a complicated way of describing properties of random walks that are obtainable by other means, it is worth briefly considering a completely
+different example: the Pomeau-Manneville map. 
+This is a deterministic dynamical system on a compact state space where the mechanism for generation of an infinite invariant measure is quite different.
+The map is
+\begin{align}
+T(x) &= x + x^{1+\alpha}\ \mod\ 1
+\end{align}
+where $x \in \left[0,1\right]$ and $\alpha>0$.
 
 \section{Nonstationary stochastic processes}
 
