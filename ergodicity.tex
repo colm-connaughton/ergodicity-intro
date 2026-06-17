@@ -68,7 +68,7 @@
 \setlength{\itemsep}{0.2pt}
 
 \helveticanarrow
-\rhead{\hvnb  12/06/2026 working notes}
+\rhead{\hvnb  16/06/2026 working notes}
 
 \projecttitle{Notes on ergodicity}
 
@@ -234,9 +234,9 @@ Asymptotic randomness means that different trajectories retain order 1 differenc
 This feature makes infinite ergodic systems fundamentally different from a physical perspective.
 
 In stochastic processes, the first example of infinite recurrence times that often comes to mind is the simple random walk on $\mathbb{Z}$.
-Does the simple random walk provides an illustrative example of infinite ergodicity. 
+Does the simple random walk provide an illustrative example of infinite ergodicity?
 I would argue this is not immediately obvious because the simple random walk is not stationary. 
-We cannot proceed as described in the previous section by taking the invariant measure to be probability measure on induced on path space by the stationary probability distribution of the stochastic process. 
+We cannot proceed as in the previous section by taking the invariant measure to be the probability measure induced on path space by the stationary probability distribution of the stochastic process. 
 However we do not require the invariant measure to be a probability measure (normalisable). 
 What alternative does this enable?
 The transition probabilities for the simple random walk are:
@@ -398,6 +398,24 @@ This is reflected in the exactly solvable example of the multiplicative random w
 
 \section{Practical considerations}
 
+In rigorous ergodic theory, ergodicity requires answering a question about the global invariant structure of an entire dynamical system $(\Omega, \mu, T)$:  do all invariant sets have measure 0 or 1?
+In applications, researchers ask a simpler question: are empirical estimators computed from a single trajectory representative of the ensemble of possible trajectories? 
+As this notes have shown, these questions are closely related theoretically.
+However it is often possible to answer the latter approximately without knowing much about the former.
+
+In practice, only a finite number of trajectories are observed and each is only of finite length, only a limited number of observables are measured and the true underlying dynamics may not even be known. 
+Under such circumstances it is pretty hopeless to attempt to establish indecomposability of an invariant measure.
+For this reason, weaker or approximate notions of ergodicity are sometimes used in applied work:
+\begin{itemize}
+\item ergodicity of the mean: does the empirical time average of a quantity of interest equal to it's empirical mean?
+\item ergodicity of higher moments (or of distribution)
+\item ergodicity as an approximate (FAPP etc) or  non-binary property (ergodicity spectrum etc)
+\end{itemize}
+These weaker notions of ergodicity provide useful ways to frame important questions in different domains of application. 
+They are distinct, and more operational in nature, than the elegant definition of measure-theoretic ergodicity that has ultimately allowed mathematicians to unify the study of invariant structures in deterministic dynamical systems, stochastic processes and beyond.
+However this should not preclude their use and more widespread adoption among applied scientists.
+The question of when the statistics of individual trajectories are representative of populations and vice versa is a critical one in many fields. 
+The concept of ergodicity too important to be solely an abstraction of mathematics and theoretical physics.
 
 \bibliographystyle{plain}
 \bibliography{refs}
