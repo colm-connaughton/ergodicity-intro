@@ -68,7 +68,7 @@
 \setlength{\itemsep}{0.2pt}
 
 \helveticanarrow
-\rhead{\hvnb  16/06/2026 working notes}
+\rhead{\hvnb  05/08/2026 working notes}
 
 \projecttitle{Notes on ergodicity}
 
@@ -90,7 +90,7 @@ Despite the fundamental and fairly intuitive nature of the concept, it turns out
 This note is my own attempt to piece together the various facets of ergodicity
 
 \section{Mathematical formulation of ergodicity for deterministic dynamical systems}
-
+\label{sec-deterministic-DS}
 \begin{itemize}
 \item Ergodicity is a property of a measure-preserving dynamical system $(\Omega, \mu, T)$ where
 \begin{itemize}
@@ -143,46 +143,50 @@ Physically, different invariant measures correspond to different notions of typi
 \end{itemize}
 
 \section{Stationary stochastic processes as dynamical systems}
-
+\label{sec-stochastic-DS}
 As a physicist, one of the more difficult aspects of ergodic theory is understanding how the above notion of ergodicity developed for deterministic dynamical systems applies to stochastic processes where we tend to think of ergodicity in terms of the equality of time averages and ensemble averages.
 In the case of deterministic dynamics, randomness can be introduced only via random choice of initial conditions.
-We can then think of the measure $\mu$ (suitably normalised) as a probability measure on the phase space and we have a random dynamical system albeit with the sole source of randomness being the choice of initial condition.
-Stochastic processes on the other hand have intrinsically random dynamics for example encoded by the transition kernel of a Markov chain. 
-If we naively think of the generator of the a stochastic process as being analogous to the map $T$ in the deterministic case, the definition of ergodicity in terms of invariant sets doesn't seem natural any more since the image of any set is random.
-This is the wrong way to think about it.
-The conceptual unification of ergodicity in stochastic processes with ergodicity in deterministic dynamical systems happens is via a completely different route: the so-called shift map.
+We can then think of the measure $\mu$ (suitably normalised) as a probability measure on the phase space and we have a random process albeit with the sole source of randomness being the choice of initial condition.
+Stochastic processes on the other hand have intrinsically random dynamics for example encoded by the transition kernel of a Markov chain or by the explicit presence of a random driving term as found in stochastic differential equations. 
+The definition of ergodicity in terms of invariant sets discussed in the previous section initially doesn't seem natural since the image of any set is random.
+The key to describing stochastic and deterministic dynamics within a single conceptual framework is the realisation that a very broad class of stochastic processes are equivalent to deterministic dynamical systems on an enlarged phase space. 
+This construction is not unique. 
+A common feature, however, is that the enlarged phase space is always much larger because points in the enlarged phase space correspond to paths or sequences. 
+We now describe two different perspectives
 
-The shift map is a way to construct a deterministic measure-preserving dynamical system from any {\em stationary} stochastic process.
-The notion of ergodicity described above for measure preserving dynamical systems applies directly to the shift system and the stochastic processes notion of equivalence of time averages and ensemble averages then follows for appropriate choice of observables.
+\subsection{Canonical (path space) representation of stationary stochastic processes}
 
-\begin{itemize}
-\item Suppose we have a stationary discrete time stochastic process, $(\ldots, x_{-1}, x_0, x_1, x_2,\ldots)$, where the $x_i$ are elements of an underlying state space, $S$. 
+Consider a stationary, discrete-time stochastic process, $\left\{ X_n\right\}_{n \in \mathbb{Z}}$, with state space $S$.
 Let us denote the stationary distribution of this process by $\pi_*$.
-\item Construct the path space, $\Omega = S^{\mathbb{Z}}$. This is the set of all possible trajectories of the stochastic process. I am deliberately calling this $\Omega$ since it is the 
-path space (not the state space, $S$) that plays the role of the phase space in the deterministic case.
-\item The law of the stochastic process induces a probability measure, $\mu$, on the path space, $\Omega$ - essentially assigning a probability to each path based on how likely it is.  
-If the process is very simple and all $x_i$ are independent then this induced measure is the product measure $\mu = \pi_*^{\mathbb{Z}}$.
-For non-trivial cases, however, the measure $\mu$ is potentially very complicated indeed since it encodes all dynamical structure, all temporal correlations and all finite-dimensional marginal distributions.
-\item
-We now define the shift operator $T\, : \, \Omega \mapsto \Omega$ on the path space. For any trajectory $\omega = (\ldots, x_{-1}, x_0, x_1, x_2,\ldots)$, the $n^\text{th}$ entry of the trajectory $T \omega$ is given by
+Introduce the {\em path space} as the space of bi-infinite sequences of states:
 \begin{align}
-\left( T\omega \right) _n & =  \left( \omega \right)  = x_{n+1}.
+\Omega &= S^\mathbb{Z}.
 \end{align}
-That is to say, the shift map applied to a trajectory moves the time index forward by one step. 
-As a map of the path space, the shift map $T$ is deterministic.
-\item
-Since the original stochastic process is stationary, $x_{n+1}$ has the same distribution as $x_n$ for all $n$ (invariance of the distribution with respect to time shift is usually taken as the definition of first order stationarity.)
-This means that $T$ does not change the measure of individual trajectories or sets of trajectories and is thus measure preserving.
-\item The path space, $\Omega$, together with the induced probability measure, $\mu$ and the shift map, $T$, therefore constitutes a measure preserving dynamical system. It is ergodic if the only invariant sets are trivial.
-Note that unlike for the deterministic case where lots of different dynamics, $T$, are studied, for stochastic processes, $T$ is always the shift map (although this map obviously depends in a complicated way on the generator of the process.) Similarly, the analogue of the phase space is always the path space not the underlying state space of the stochastic process.
-\item
+A point $\omega$ in the path space corresponds to a trajectory of the original process:
+\begin {align}
+\omega &= (\ldots x_{-2}, x_{-1}, x_0, x_1, x_2 \ldots).
+\end{align}
+Any  process can be represented as a deterministic dynamical system on the path space where the dynamics are generated by the so-called {\em shift map}, $\theta: \Omega \to \Omega$.
+The shift is defined as follows. 
+For any $\omega \in \Omega$, the $n^{\text{th}}$ entry of $\theta\, \omega$ is
+\begin{align}
+\label{eq-shift-map}
+(\theta\, \omega)_n & = \omega_{n+1}.
+\end{align}
+The shift map operates like a ticker tape. 
+It advances each path in $\Omega$ by a single time step.
+
+To complete the construction of a deterministic dynamical system in the spirit of section \ref{sec-deterministic-DS}, we need an invariant measure on the path space $\Omega$.
+The stationary law, $\pi_*$, of the original stochastic process induces a probability measure, $\mu$, on the path space, $\Omega$ - essentially assigning a probability to each path based on how likely it is.  
+Since the process is stationary, $\mu$ is invariant under the shift operator, $\theta$.
+The notion of ergodicity introduced in section \ref{sec-deterministic-DS} for measure preserving dynamical systems now applies directly to the shift map, $\theta$, acting on path space, $\Omega$ with the induced invariant measure, $\mu$. 
+
 If the shifted system is ergodic then Birkhoff's Theorem holds:
 \begin{align}
 \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} F(T^n \omega) = \int_\Omega f(\omega) d\mu(\omega)
 \end{align}
 for any trajectory $\omega \in \Omega$ and any integrable function, $F$ on path space.
-\item 
-However, we do not usually think of time and ensemble averages over trajectories in path space.
+However, when stochastic process are used in applications or modelling, we do not usually think of time and ensemble averages over trajectories in path space.
 To obtain the more usual expression of Birkhoff's theorem for stochastic processes, we choose particular observables that pick out regular functions of single variables, $F(\omega) = f((\omega)_0)$.
 Since this observable depends only on a single coordinate, in this case $(\omega)_0 = x_0$, the integral on the RHS only depends on the one-dimensional marginal of the path space induced measure $\mu$. 
 Moreover, since the process is stationary, this one-dimensional marginal distribution is the stationary distribution of the original stochastic process.
@@ -191,17 +195,116 @@ We then have
 \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x_0) = \int_S f(x) d \pi_*(x) = \mathbb{E}_{\pi_*}[f].
 \end{align}
 This is the more usual form of Birkhoff's Theorem as stated for ergodic stochastic processes.
-\item
-We can again think of this in terms of recurrences: given a set $A \subset S$ (an event) if you observe a single realisation of the stochastic process and count the proportion of time the trajectory visits the set $A$, this will converge to probability of the event $A$ under the stationary distribution of the process.
-\item
-Give example of discrete analogue of Ornstein-Uhlenbeck process driven by Bernoulli noise \cite{solomyak1995random}:
-\begin{align}
-x_{n+1} &= a\,x_n + \xi_{n+1}
-\end{align} 
-where $\xi_n \in  \left\{+1, -1 \right\}$ with equal probability.
-For $a = \frac{1}{2}$ for example the stationary density,  $\pi_* = \text{Unif}(-2,2)$.  Time averages and ensemble averages for simple moments can be calculated explicitly and shown to agree.
 
-\end{itemize}
+
+While the canonical representation is general for any stationary process, the induced measure, $\mu$, can be doing a lot of work.
+If the process is very simple and all $x_i$ are independent then this induced measure is the product measure $\mu = \pi_*^{\mathbb{Z}}$.
+For non-trivial cases, however, the measure $\mu$ is potentially very complicated indeed since it encodes all dynamical structure, all temporal correlations and all finite-dimensional marginal distributions.
+
+\subsection{Skew-product representation of random dynamical systems}
+
+The skew-product representation is applicable when a stochastic process can be separated into a deterministic part and a random driving term. 
+The general form is
+\begin{align}
+\label{eq-RDS}
+X_{n+1} &= F(X_n, \xi_{n+1}),
+\end{align}
+where the $X_n$ take values in a state space, $S$, and the $\xi_n$ are random variables taking values in a ``noise'' space $\Xi$. 
+A very simple example is the discrete Ornstein Uhlenbeck process:
+\begin{align}
+x_{n+1} &= a\,x_n + \xi_{n+1},
+\end{align}
+where the $\xi_n$ are i.i.d. random variables and we assume $\left| a \right| <1$ to ensure the existence of a stationary distribution.
+To represent stochastic processes of the form Eq.~(\ref{eq-RDS}) as a deterministic system on a larger phase space, we again use the notion of
+paths. 
+This time however, a path $\xi =  (\ldots \xi_{-2}, \xi_{-1}, \xi_0, \xi_1, \xi_2 \ldots)$ is a noise realisation.
+Noise realisations are bi-infinite sequences living in the space $\Xi^\mathbb{Z}$. 
+The deterministic dynamical system equivalent to the process Eq.~(\ref{eq-RDS})  is the skew-product map, $\Theta$, which maps the extended phase space $\Omega = S \times \Xi^\mathbb{Z} $ to itself.
+For a state $x \in S$ and a noise realisation, $\xi \in \Xi^\mathbb{Z}$, the skew-product map is defined
+\begin{align}
+\Theta(x, \xi) & = (\theta\, \xi, F(x, \xi_1),
+\end{align}
+where $\theta$ is again the shift map, (\ref{eq-shift-map}), now acting on noise realisations rather than on the trajectories themselves.
+In the skew-product formulation, the extended state space $\Omega = S \times \Xi^\mathbb{Z} $ cleanly separates the dynamical state from the noise.
+This is advantageous if the driving noise is i.i.d. as is common in many applications. 
+The induced invariant measure on the $ \Xi^\mathbb{Z}$ component of the extended phase space is then simply the product measure. 
+Any residual complexity of the induced invariant measure is restricted to the state space component, $S$.
+
+In addition, the separation into state and noise allows one to study what happens to the deterministic part of the dynamics for a fixed realisation of the noise.
+For a fixed $\xi \in \Xi^\mathbb{Z}$, the deterministic evolution on $S$ is given by the $n$-step evolution map $\varphi(n, \xi) : S \to S$,  often referred to as the cocycle map.
+This is defined for each point $x \in S$ as
+\begin{align}
+\varphi(n, \xi)(x) = F_{\xi_n} \circ \cdots \circ F_{\xi_1} (x)
+\end{align}
+where $F_{x_i}$ is shorthand for the function $F(., \xi_i)$ in Eq.~(\ref{eq-RDS}). 
+It is here that the sub-field of random dynamical systems differs in perspective from the general study of stochastic processes. By fixing the noise realisation, time-asymptotic dynamical properties of the deterministic evolution map, $\varphi(n, \xi)$, such as invariant sets, attractors and sensitive dependence on initial conditions can be identified and their average properties then studied by averaging over noise realisations later.
+
+The skew-product representation is natural for modelling many physical systems where noise is often thought of as modelling exogenous fluctuations in environmental conditions. 
+In continuous time, it is a very natural way to think about stochastic differential equations without assuming the semi-Martingale property required for Ito calculus. 
+Furthermore,  subject to mild assumptions, every Markov process $\left\{ X_n\right\}_{n \in \mathbb{Z}}$ (and by extension any finite memory recursive processes like ARMA models) also has a skew-product representation:
+\begin{align}
+\label{eq-skew-product-Markov}
+X_{n+1} &= F(X_n, U_{n+1})
+\end{align}
+where the $U_n$ are i.i.d. uniform random variables on $[0,1]$.
+To see this, consider a discrete Markov chain on a state space, $S$, with transition kernel, $P(x, y)$.
+Given any state, $x \in S$, $P(x, y)$ is a probability distribution over $y$.
+Let $\mathcal{F}_x(y)$ be the corresponding cumulative distribution function (CDF). 
+Like any distribution on $\mathbb{R}$, the distribution $P(x, y)$  it can be generated from a uniform random variable using the inverse of its CDF.
+That is to say
+\begin{align}
+y = \mathcal{F}^{-1}_x(u)
+\end{align}
+has the required distribution, $P(x, y)$, where $u \sim \text{Unif}(0,1)$.
+Thus in Eq.~(\ref{eq-skew-product-Markov}) we can take $F(x, u) =  \mathcal{F}^{-1}_x(u)$ to obtain the skew-product representation.
+This is sometimes called the random mapping representation or  functional representation of the Markov chain.
+
+
+%\begin{itemize}
+%\item Suppose we have a stationary discrete time stochastic process, $(\ldots, x_{-1}, x_0, x_1, x_2,\ldots)$, where the $x_i$ are elements of an underlying state space, $S$. 
+%Let us denote the stationary distribution of this process by $\pi_*$.
+%\item Construct the path space, $\Omega = S^{\mathbb{Z}}$. This is the set of all possible trajectories of the stochastic process. I am deliberately calling this $\Omega$ since it is the 
+%path space (not the state space, $S$) that plays the role of the phase space in the deterministic case.
+%\item 
+%\item
+%We now define the shift operator $T\, : \, \Omega \mapsto \Omega$ on the path space. For any trajectory $\omega = (\ldots, x_{-1}, x_0, x_1, x_2,\ldots)$, the $n^\text{th}$ entry of the trajectory $T \omega$ is given by
+%\begin{align}
+%\left( T\omega \right) _n & =  \left( \omega \right)  = x_{n+1}.
+%\end{align}
+%That is to say, the shift map applied to a trajectory moves the time index forward by one step. 
+%As a map of the path space, the shift map $T$ is deterministic.
+%\item
+%Since the original stochastic process is stationary, $x_{n+1}$ has the same distribution as $x_n$ for all $n$ (invariance of the distribution with respect to time shift is usually taken as the definition of first order stationarity.)
+%This means that $T$ does not change the measure of individual trajectories or sets of trajectories and is thus measure preserving.
+%\item The path space, $\Omega$, together with the induced probability measure, $\mu$ and the shift map, $T$, therefore constitutes a measure preserving dynamical system. It is ergodic if the only invariant sets are trivial.
+%Note that unlike for the deterministic case where lots of different dynamics, $T$, are studied, for stochastic processes, $T$ is always the shift map (although this map obviously depends in a complicated way on the generator of the process.) Similarly, the analogue of the phase space is always the path space not the underlying state space of the stochastic process.
+%\item
+%If the shifted system is ergodic then Birkhoff's Theorem holds:
+%\begin{align}
+%\lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} F(T^n \omega) = \int_\Omega f(\omega) d\mu(\omega)
+%\end{align}
+%for any trajectory $\omega \in \Omega$ and any integrable function, $F$ on path space.
+%\item 
+%However, we do not usually think of time and ensemble averages over trajectories in path space.
+%To obtain the more usual expression of Birkhoff's theorem for stochastic processes, we choose particular observables that pick out regular functions of single variables, $F(\omega) = f((\omega)_0)$.
+%Since this observable depends only on a single coordinate, in this case $(\omega)_0 = x_0$, the integral on the RHS only depends on the one-dimensional marginal of the path space induced measure $\mu$. 
+%Moreover, since the process is stationary, this one-dimensional marginal distribution is the stationary distribution of the original stochastic process.
+%We then have
+%\begin{align}
+%\lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x_0) = \int_S f(x) d \pi_*(x) = \mathbb{E}_{\pi_*}[f].
+%\end{align}
+%This is the more usual form of Birkhoff's Theorem as stated for ergodic stochastic processes.
+%\item
+%We can again think of this in terms of recurrences: given a set $A \subset S$ (an event) if you observe a single realisation of the stochastic process and count the proportion of time the trajectory visits the set $A$, this will converge to probability of the event $A$ under the stationary distribution of the process.
+%\item
+%Give example of discrete analogue of Ornstein-Uhlenbeck process driven by Bernoulli noise \cite{solomyak1995random}:
+%\begin{align}
+%x_{n+1} &= a\,x_n + \xi_{n+1}
+%\end{align} 
+%where $\xi_n \in  \left\{+1, -1 \right\}$ with equal probability.
+%For $a = \frac{1}{2}$ for example the stationary density,  $\pi_* = \text{Unif}(-2,2)$.  Time averages and ensemble averages for simple moments can be calculated explicitly and shown to agree.
+%
+%\end{itemize}
 
 \section{Infinite ergodicity}
 
