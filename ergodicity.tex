@@ -138,8 +138,14 @@ Ergodicity provides a precise notion of typicality: in an ergodic system almost 
 The Goldstein and Lebowitz typicality account of ergodicity asserts that for a broad class of many body physical systems, typical trajectories correspond to thermomodynamic equilibrium states. 
 This point of view holds that typicality of equilibrium states is more important for the foundations of statistical mechanics than proving that the underlying equations of motion are ergodic with respect  to the Gibbs measure in the strict mathematical sense.
 \item
-Ergodicity is a property of the map, $T$, and the invariant measure, $\mu$, but the latter need not be unique.  Dynamical systems research tends to give primacy to the map, $T$, and then ask which invariant measures it admits and whether they are ergodic.  
-Physically, different invariant measures correspond to different notions of typicality.
+Ergodicity is a property of the map, $T$, and the invariant measure, $\mu$. For a given map, $T$, there need not be a unique invariant measure. 
+XXX Give example of a map with two fixed points XXX
+Physically, different invariant measures correspond to different notions of typicality. 
+However, if an invariant measure is unique then it must be ergodic.
+The reverse need not be true .
+XXX Give example of identity map XXX
+Dynamical systems research tends to give primacy to the map, $T$, and then ask which invariant measures it admits and whether they are ergodic.  
+
 \end{itemize}
 
 \section{Stationary stochastic processes as dynamical systems}
@@ -181,7 +187,13 @@ The stationary law, $\pi_*$, of the original stochastic process induces a probab
 Since the process is stationary, $\mu$ is invariant under the shift operator, $\theta$.
 The notion of ergodicity introduced in section \ref{sec-deterministic-DS} for measure preserving dynamical systems now applies directly to the shift map, $\theta$, acting on path space, $\Omega$ with the induced invariant measure, $\mu$. 
 
-If the shifted system is ergodic then Birkhoff's Theorem holds:
+The question of uniqueness can be subtle. 
+Given a stationary process, the corresponding induced invariant measure is unique in the sense that the joint law of the stationary process essentially is the induced path space measure. 
+However, given an underlying stochastic dynamic, for example a Markov process, it may have more than one stationary distribution.
+When discussing uniqueness, it is therefore important to specify whether primacy is given to the dynamic or to a specific stationary law. 
+To complicate matters further, even when the stationary law and the corresponding induced invariant measure is unique, the argument of the previous section does not guarantee ergodicity since it is possible for the shift map on path space to admit other invariant measures that have nothing to do with the stationary law.
+
+Leaving this issue aside, if the shifted system is ergodic then Birkhoff's Theorem holds:
 \begin{align}
 \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} F(T^n \omega) = \int_\Omega f(\omega) d\mu(\omega)
 \end{align}
@@ -201,6 +213,7 @@ While the canonical representation is general for any stationary process, the in
 If the process is very simple and all $x_i$ are independent then this induced measure is the product measure $\mu = \pi_*^{\mathbb{Z}}$.
 For non-trivial cases, however, the measure $\mu$ is potentially very complicated indeed since it encodes all dynamical structure, all temporal correlations and all finite-dimensional marginal distributions.
 
+
 \subsection{Skew-product representation of random dynamical systems}
 
 The skew-product representation is applicable when a stochastic process can be separated into a deterministic part and a random driving term. 
@@ -212,6 +225,7 @@ X_{n+1} &= F(X_n, \xi_{n+1}),
 where the $X_n$ take values in a state space, $S$, and the $\xi_n$ are random variables taking values in a ``noise'' space $\Xi$. 
 A very simple example is the discrete Ornstein Uhlenbeck process:
 \begin{align}
+\label{eq-discrete-OU}
 x_{n+1} &= a\,x_n + \xi_{n+1},
 \end{align}
 where the $\xi_n$ are i.i.d. random variables and we assume $\left| a \right| <1$ to ensure the existence of a stationary distribution.
@@ -259,6 +273,20 @@ has the required distribution, $P(x, y)$, where $u \sim \text{Unif}(0,1)$.
 Thus in Eq.~(\ref{eq-skew-product-Markov}) we can take $F(x, u) =  \mathcal{F}^{-1}_x(u)$ to obtain the skew-product representation.
 This is sometimes called the random mapping representation or  functional representation of the Markov chain.
 
+\subsection{An explicit example}
+
+Consider the discrete Ornstein Uhlenbeck process, Eq.~(\ref{eq-discrete-OU}).  
+
+An interesting case is symmetric Bernoulli noise
+\begin{align}
+\xi_i &= \left\{
+\begin{array}{ll}
+1 & \text{with probability $\frac{1}{2}$}\\
+-1 & \text{with probability $\frac{1}{2}$}.
+\end{array}
+\right.
+\end{align}
+The nature of the stationary distribution as a function of $a$ is surprisingly complicated and was characterised in \cite{solomyak1995random} as follows:
 
 %\begin{itemize}
 %\item Suppose we have a stationary discrete time stochastic process, $(\ldots, x_{-1}, x_0, x_1, x_2,\ldots)$, where the $x_i$ are elements of an underlying state space, $S$. 
