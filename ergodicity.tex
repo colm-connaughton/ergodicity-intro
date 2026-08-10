@@ -134,17 +134,39 @@ Another way to state Eq.~(\ref{eq-recurrences}) is that for almost all sets, $A$
 \end{align}
 where $c>0$ is the inverse of the mean return time.
 \item
-Ergodicity provides a precise notion of typicality: in an ergodic system almost all initial conditions will eventually explore the full phase space. ``Almost all'' means those atypical trajectories that don't explore the full phase space have measure zero. 
+Ergodicity provides a precise notion of typicality: in an ergodic system almost all initial conditions are typical in the sense that they will eventually explore the full phase space. ``Almost all'' means those atypical trajectories that don't explore the full phase space have measure zero. 
 The Goldstein and Lebowitz typicality account of ergodicity asserts that for a broad class of many body physical systems, typical trajectories correspond to thermomodynamic equilibrium states. 
 This point of view holds that typicality of equilibrium states is more important for the foundations of statistical mechanics than proving that the underlying equations of motion are ergodic with respect  to the Gibbs measure in the strict mathematical sense.
 \item
 Ergodicity is a property of the map, $T$, and the invariant measure, $\mu$. For a given map, $T$, there need not be a unique invariant measure. 
-XXX Give example of a map with two fixed points XXX
-Physically, different invariant measures correspond to different notions of typicality. 
-However, if an invariant measure is unique then it must be ergodic.
-The reverse need not be true .
-XXX Give example of identity map XXX
-Dynamical systems research tends to give primacy to the map, $T$, and then ask which invariant measures it admits and whether they are ergodic.  
+For example, consider a map which has 2 fixed points, $x_1$ and $x_2$ with $T(x_1) = x_1$ and $T(x_2)=x_2$.
+The point measures $\mu_1 = \delta(x-x_1)$ and $\mu_2 = \delta(x-x_2)$ are both invariant measures with respect to $T$ and both are ergodic.
+Physically, different invariant measures therefore correspond to different notions of typicality. 
+The fixed points example is trivial here:  the measures $\mu_1$ and $\mu_2$ describe the typical behaviour of trajectories that start at one fixed point or the other.
+In more complex situations, invariant sets can be less trivial than simple fixed points.
+This has practical implications for experiments or simulations where the choice of invariant measure may correspond to particular explicit (or implicit) choices that are made in preparing samples or initial conditions.
+What is then typical behaviour for one experimental protocol might be highly atypical for another. 
+Hence the mathematical question of uniqueness of the invariant measure and the choice of measure when it is not unique can be more practically consequential than it might first appear.
+
+If a map admits multiple invariant measures, all, some or none of them may be ergodic.
+However, if a map admits a unique invariant measure, it must be ergodic. 
+This is easy to see by contradiction: assume that a map admits a unique invariant measure, $\mu$ and it is {\em not} ergodic.
+If $\mu$ is not ergodic, there must exist an invariant set, $A$, such that $T(A) = A$ and $0 < \mu(A) < 1$.
+We can therefore define a new measure $\mu_A$ which is defined as follows for any set $B$:
+\begin{align}
+\mu_A(B) = \mu(A \cap B).
+\end{align}
+Now for any set, $B$, we can reason as follows, using the facts that $A$ is an invariant set and $\mu$ is an invariant measure:
+\begin{align*}
+\mu_A(T(B)) &= \mu(A \cap T(B)) \\
+& = \mu(T(A) \cap T(B))  \\
+& = \mu(T(A \cap B)) \\ 
+& = \mu(A \cap B) \\
+& = \mu_A(B). & 
+\end{align*}
+Thus $\mu_A$ is an invariant measure which contradicts the assumption that $\mu$ is the unique invariant measure.
+Therefore unique invariant measures must be ergodic.
+As seen above, the reverse need not be true: ergodic invariant measures need not be unique.
 
 \end{itemize}
 
@@ -276,8 +298,43 @@ This is sometimes called the random mapping representation or  functional repres
 \subsection{An explicit example}
 
 Consider the discrete Ornstein Uhlenbeck process, Eq.~(\ref{eq-discrete-OU}).  
+In the Gaussian case, $\xi_i \sim N(\mu_\xi, \sigma_\xi^2)$, we can use the fact that sums of Gaussian random variables are Gaussian to guess that the stationary law, $\pi_*^a(x)$, is Gaussian:
+\begin{align}
+X_n \sim N(m, v)
+\end{align}
+where the mean, $m$, and variance, $v$, are to be determined. Then $a X_n \sim N(a m, a^2 v)$.
+Using Eq.~(\ref{eq-discrete-OU}) and the fact that at stationarity, $X_{n+1} \sim X_n$, we quickly find that 
+\begin{align}
+m & = \frac{\mu_\xi}{1-a}\\
+v &= \frac{\sigma_\xi^2}{1-a^2},
+\end{align}
+and the stationary law is
+\begin{align}
+\pi_*^a(x) & = \sqrt{\frac{1-a^2}{2 \pi \sigma_\xi^2 } } \exp \left[ \frac{1-a^2}{2 \sigma_\xi^2} \left(x - \frac{\mu_\xi}{1-a} \right)^2\right].
+\end{align}
+Time averages can also be calculated explicitly. For example, suppose we wish to calculate the time average of $X^2$.
+Assume for simplicity that $\mu_\xi = 0$.
+By squaring Eq.~(\ref{eq-discrete-OU}) and rearranging a little one can write:
+\begin{align}
+(1 - a^2) X_n^2 & =\xi_{n+1}^2 + 2 a X_n \xi_{n+1}  - (X_{n+1}^2 - X_n^2)
+\end{align}
+Now sum from $n=0$ to $N-1$ and divide by $N$ to obtain the required time average on the left hand side:
+\begin{align}
+\nonumber (1 - a^2) \frac{1}{N} \sum_{n=0}^{N-1} X_n^2 & =  \frac{1}{N} \sum_{n=0}^{N-1} \xi_{n+1}^2 \\
+ \nonumber &+ 2 a  \frac{1}{N}\sum_{n=0}^{N-1}  X_n \xi_{n+1} \\
+ & - \frac{X_N^2 - X_0^2}{N}
+\end{align} 
+As $N \to \infty$, the first term on the right hand side converges to $\sigma_\xi^2$ by the Strong Law of Large Numbers. 
+The second term converges to zero by the Martingale Strong Law of Large Numbers.
+The third term also converges to zero. 
+Intuitively this is because $X_N$ stays of order one almost surely but a full proof is technical.
+We then conclude that the time average of $X^2$ is equal to the variance of the stationary distribution of $X$ as expected:
+\begin{align}
+\frac{1}{N} \sum_{n=0}^{N-1} X_n^2  & = \frac{\sigma_\xi^2}{1-a^2} = \mathbb{E}_{\pi_*^a}\left[ X^2\right].
+\end{align}
 
-An interesting case is symmetric Bernoulli noise
+
+Since Gaussian examples, tend  to be overemphasised due to their tractability, an interesting non-Gaussian case is symmetric Bernoulli noise
 \begin{align}
 \xi_i &= \left\{
 \begin{array}{ll}
@@ -286,7 +343,15 @@ An interesting case is symmetric Bernoulli noise
 \end{array}
 \right.
 \end{align}
-The nature of the stationary distribution as a function of $a$ is surprisingly complicated and was characterised in \cite{solomyak1995random} as follows:
+By considering the extremal trajectories ($\xi_i=1$ and $\xi_i=-1$ for all $i$) it is easy to show by direct calculation that the stationary distribution, $\pi_*^a(x)$,  of this process must be compactly supported on $\left[ -\frac{1}{1-a}, \frac{1}{1-a} \right]$.
+Beyond that however, the nature of  $\pi_*^a(x)$ as a function of $a$ is surprisingly complicated and was characterised in \cite{solomyak1995random} as follows:
+\begin{itemize}
+\item $ 0< a < \frac{1}{2}$:  $\pi_*^a(x)$ is singular and supported on a Cantor set of Lebesgue measure $0$.
+\item $a = \frac{1}{2}$ :  $\pi_*^a(x)$ is the uniform Lebesgue measure on $\left[-2,2\right]$
+\item $\frac{1}{2} < a < 1$: $\pi_*^a(x)$ is absolutely continuous with respect to Lebesgue measure except for a set of values of $a$ of measure zero where it is again singular.
+\end{itemize}
+It turns out that for this process, $\pi_*^a(x)$ is unique and the corresponding induced measure on path space is ergodic, even though the measure itself can be complicated.
+The uniform case, $a=\frac{1}{2}$ is one of the few examples of a process (other than those with Gaussian noise) where time averages can be calculated explicitly and shown to equal ensemble averages by direct calculation.
 
 %\begin{itemize}
 %\item Suppose we have a stationary discrete time stochastic process, $(\ldots, x_{-1}, x_0, x_1, x_2,\ldots)$, where the $x_i$ are elements of an underlying state space, $S$. 
