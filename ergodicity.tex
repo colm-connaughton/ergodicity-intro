@@ -296,8 +296,7 @@ Thus in Eq.~(\ref{eq-skew-product-Markov}) we can take $F(x, u) =  \mathcal{F}^{
 This is sometimes called the random mapping representation or  functional representation of the Markov chain.
 
 \subsection{An explicit example}
-
-Consider the discrete Ornstein Uhlenbeck process, Eq.~(\ref{eq-discrete-OU}).  
+In this section we use  the discrete Ornstein Uhlenbeck process, Eq.~(\ref{eq-discrete-OU}) as a pedagogical example to show some explicit calculations for the benefit of readers who find explicit examples useful.
 In the Gaussian case, $\xi_i \sim N(\mu_\xi, \sigma_\xi^2)$, we can use the fact that sums of Gaussian random variables are Gaussian to guess that the stationary law, $\pi_*^a(x)$, is Gaussian:
 \begin{align}
 X_n \sim N(m, v)
@@ -322,7 +321,7 @@ Now sum from $n=0$ to $N-1$ and divide by $N$ to obtain the required time averag
 \begin{align}
 \nonumber (1 - a^2) \frac{1}{N} \sum_{n=0}^{N-1} X_n^2 & =  \frac{1}{N} \sum_{n=0}^{N-1} \xi_{n+1}^2 \\
  \nonumber &+ 2 a  \frac{1}{N}\sum_{n=0}^{N-1}  X_n \xi_{n+1} \\
- & - \frac{X_N^2 - X_0^2}{N}
+ \label{eq-time-average-variance}& - \frac{X_N^2 - X_0^2}{N}
 \end{align} 
 As $N \to \infty$, the first term on the right hand side converges to $\sigma_\xi^2$ by the Strong Law of Large Numbers. 
 The second term converges to zero by the Martingale Strong Law of Large Numbers.
@@ -330,10 +329,9 @@ The third term also converges to zero.
 Intuitively this is because $X_N$ stays of order one almost surely but a full proof is technical.
 We then conclude that the time average of $X^2$ is equal to the variance of the stationary distribution of $X$ as expected:
 \begin{align}
+\mathbb{T}\left[ X^2\right] = 
 \frac{1}{N} \sum_{n=0}^{N-1} X_n^2  & = \frac{\sigma_\xi^2}{1-a^2} = \mathbb{E}_{\pi_*^a}\left[ X^2\right].
 \end{align}
-
-
 Since Gaussian examples, tend  to be overemphasised due to their tractability, an interesting non-Gaussian case is symmetric Bernoulli noise
 \begin{align}
 \xi_i &= \left\{
@@ -344,15 +342,27 @@ Since Gaussian examples, tend  to be overemphasised due to their tractability, a
 \right.
 \end{align}
 By considering the extremal trajectories ($\xi_i=1$ and $\xi_i=-1$ for all $i$) it is easy to show by direct calculation that the stationary distribution, $\pi_*^a(x)$,  of this process must be compactly supported on $\left[ -\frac{1}{1-a}, \frac{1}{1-a} \right]$.
-Beyond that however, the nature of  $\pi_*^a(x)$ as a function of $a$ is surprisingly complicated and was characterised in \cite{solomyak1995random} as follows:
+Following the reasoning of Eq.~(\ref{eq-time-average-variance}), the time average of $X^2$ can again be calculated.
+The calculation is easier because for Bernoulli noise, $\xi_n^2 = 1$  and $X_n^2$ is explicitly bounded by $\frac{1}{(1-a^2)^2}$.
+Repeating the previous calculation we find that
+\begin{align}
+\label{eq-time-average-variance-Bernoullli-noise}
+\mathbb{T}\left[ X^2\right] =  &= \frac{1}{1-a^2}.
+\end{align}
+Ensemble averages for the Bernoulli case are difficult to calculate explicitly because the nature of  the stationary distribution, $\pi_*^a(x)$, as a function of $a$ is surprisingly complicated. 
+It was characterised in \cite{solomyak1995random} as follows:
 \begin{itemize}
-\item $ 0< a < \frac{1}{2}$:  $\pi_*^a(x)$ is singular and supported on a Cantor set of Lebesgue measure $0$.
+\item $ 0< a < \frac{1}{2}$:  $\pi_*^a(x)$ is singular and supported on a Cantor set of dimension $\log 2 / \log a^{-1}$.
 \item $a = \frac{1}{2}$ :  $\pi_*^a(x)$ is the uniform Lebesgue measure on $\left[-2,2\right]$
 \item $\frac{1}{2} < a < 1$: $\pi_*^a(x)$ is absolutely continuous with respect to Lebesgue measure except for a set of values of $a$ of measure zero where it is again singular.
 \end{itemize}
-It turns out that for this process, $\pi_*^a(x)$ is unique and the corresponding induced measure on path space is ergodic, even though the measure itself can be complicated.
-The uniform case, $a=\frac{1}{2}$ is one of the few examples of a process (other than those with Gaussian noise) where time averages can be calculated explicitly and shown to equal ensemble averages by direct calculation.
-
+It turns out that for this process, $\pi_*^a(x)$ is unique and the corresponding induced measure on path space is ergodic, even though the measure itself is complicated.
+The uniform case, $a=\frac{1}{2}$ is the only case for which explicit calculations are simple.
+For example, when $a=\frac{1}{2}$,
+\begin{align}
+ \mathbb{E}_{\pi_*^\frac{1}{2}}\left[ X^2\right] = \int_{-2}^2 \frac{1}{4} x^2 \, dx = \frac{4}{3}.
+\end{align}
+This agrees withe the time-averaged variance given by Eq.~(\ref{eq-time-average-variance-Bernoullli-noise}) with $a=\frac{1}{2}$, as it must since the process is ergodic.
 %\begin{itemize}
 %\item Suppose we have a stationary discrete time stochastic process, $(\ldots, x_{-1}, x_0, x_1, x_2,\ldots)$, where the $x_i$ are elements of an underlying state space, $S$. 
 %Let us denote the stationary distribution of this process by $\pi_*$.
