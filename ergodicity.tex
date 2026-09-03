@@ -55,7 +55,7 @@
 \titleformat{\chapter}
   {\Large\hvnb\color{blue}}{Lecture \thechapter:}{1em}{}
 
-\newenvironment{Figure} 
+\newenvironment{Figure}
   {\par\medskip\noindent\minipage{\linewidth}}
   {\endminipage\par\medskip}
 
@@ -72,7 +72,7 @@
 
 \projecttitle{Notes on ergodicity}
 
-%\theauthor{Colm Connaughton} 
+%\theauthor{Colm Connaughton}
 
 
 \begin{multicols}{2}
@@ -91,8 +91,8 @@ This note is my own attempt to piece together the various facets of ergodicity
 
 \section{Mathematical formulation of ergodicity for deterministic dynamical systems}
 \label{sec-deterministic-DS}
-\begin{itemize}
-\item Ergodicity is a property of a measure-preserving dynamical system $(\Omega, \mu, T)$ where
+
+Ergodicity is a property of a measure-preserving dynamical system $(\Omega, \mu, T)$ where
 \begin{itemize}
 \item $\Omega$ is the phase space - the set of all possible states the system can be in.
 \item $\mu$ is a measure which assigns a non-negative volume to any subset of the phase space
@@ -100,56 +100,74 @@ This note is my own attempt to piece together the various facets of ergodicity
 \begin{align}
 x_{n+1} &= T(x_n)
 \end{align}
+\end{itemize}
 $T$ is required to be measure-preserving in the sense that
 \begin{align}
+  \label{eq-measure-preserving}
 \mu(T^{-1} A) & = \mu(A)
 \end{align}
-for all subsets $A \subset \Omega$. 
-It is also required to be finite in the sense that $\mu(\Omega) < \infty$. Typically we normalise so that $\mu(\Omega) = 1$.
+for all subsets $A \subset \Omega$. Here $T^{-1}(A)$ denotes the preimage of $A$ under the map $T$:
+\begin{align}
+  T^{-1}(A) = \{ x \in \Omega \, : \, T(x) \in A \}.
+\end{align}
+In other words, $T^{-1}(A)$ is the set of all points in $\Omega$ that are mapped into $A$ by $T$.
+The use of the preimage is technically important because $T$ need not be invertible.
+However for the purposes of building intuition, one can restrict to invertible maps
+and think of an invariant measure as satisfying $\mu(T(A)) = \mu(A)$ in Eq.~(\ref{eq-measure-preserving}).
+In addition to being invariant under $T$, the measure, $\mu$, is also required to be finite in the sense that $\mu(\Omega) < \infty$. Typically we normalise so that $\mu(\Omega) = 1$.
 In many examples, the phase space is compact which makes it easier for the total measure to be finite but this is not a requirement.
-\end{itemize}
-\item 
+
+
 The definition of ergodicity which has proven most fruitful mathematically is surprisingly abstract: a measure preserving dynamical system is ergodic if the only invariant sets have measure zero or 1.
-Here invariant means $T(A) = A$.
-\item
+Here invariant means $T^{-1}(A) = A$, where again the preimage under $T$ is used to allow for the possibility that $T$ is not invertible.
+
+
 A consequence of this definition is the more familiar statement about equality of time averages and phase space averages as expressed by Birkhoff's Theorem:
 \begin{align}
 \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x_0) = \int_\Omega f(x) d\mu(x)
 \end{align}
-for all integrable functions $f$ on $\Omega$.
-\item
-This can also be thought of as a statement about recurrences (how often a trajectory revisits a set $A \subset \Omega$) : if you follow a single trajectory of the dynamical system and count how often it is in a set $A$, the proportion of iterations the trajectory is in $A$ will converge to  $\mu(A)$. 
+for all integrable functions $f$ on $\Omega$ and almost all $x_0$.
+``Almost all'' means the set of exceptions to the statement have measure zero.
+The almost all qualification arises very frequently in precisely stated mathematical results
+because there are often exceptional cases that do not satisfy the stated property.
+Asserting that the measure of all such exceptions is zero formalises the idea that the exceptions are atypical
+and by implication can be ignored for practical purposes.
+
+Ergodicity can also be thought of as a statement about recurrences (how often a trajectory revisits a set $A \subset \Omega$) : if you follow a single trajectory of the dynamical system and count how often it is in a set $A$, the proportion of iterations the trajectory is in $A$ will converge to  $\mu(A)$.
 Mathematically,  this follows from applying Birkhoff's theorem to the indicator function on $A$,  $1_A(x)$:
 \begin{align}
 \label{eq-recurrences}
 \lim_{N\to \infty} \frac{1}{N} \sum_{n=0}^{N-1} 1_A(T^n x_0) & = \int_\Omega 1_A(x) d\mu = \mu(A).
 \end{align}
-Recurrence frequencies become stable as $N$ grows and are consistent with the invariant measure. 
+Recurrence frequencies become stable as $N$ grows and are consistent with the invariant measure.
 Let us denote by $\tau_A$ the random variable corresponding to the time that a trajectory takes to revisit $A$ having left it.
-This is called the return time. 
-One can show that the mean return time, $\mathbb{E}\left[\tau_A\right] = \frac{1}{\mu(A)}$.
-Another way to state Eq.~(\ref{eq-recurrences}) is that for almost all sets, $A$, the number of recurrent visits to $A$ asymptotically grows proportional to $N$ : 
+This is called the return time.
+With some technical qualifications, it can be shown \cite{Kac47} that the mean return time, $\mathbb{E}\left[\tau_A\right] = \frac{1}{\mu(A)}$.
+Another way to state Eq.~(\ref{eq-recurrences}) is that for almost all sets, $A$, the number of recurrent visits to $A$ asymptotically grows proportional to $N$ :
 \begin{align}
  \sum_{n=0}^{N-1} 1_A(T^n x_0)  \sim c\, N
 \end{align}
 where $c>0$ is the inverse of the mean return time.
-\item
-Ergodicity provides a precise notion of typicality: in an ergodic system almost all initial conditions are typical in the sense that they will eventually explore the full phase space. ``Almost all'' means those atypical trajectories that don't explore the full phase space have measure zero. 
-The Goldstein and Lebowitz typicality account of ergodicity asserts that for a broad class of many body physical systems, typical trajectories correspond to thermomodynamic equilibrium states. 
+
+
+Ergodicity provides a precise notion of typicality: in an ergodic system almost all initial
+conditions are typical in the sense that they will eventually explore the full phase space.
+The Goldstein and Lebowitz typicality account of ergodicity asserts that for a broad class of many body physical systems, typical trajectories correspond to thermomodynamic equilibrium states.
 This point of view holds that typicality of equilibrium states is more important for the foundations of statistical mechanics than proving that the underlying equations of motion are ergodic with respect  to the Gibbs measure in the strict mathematical sense.
-\item
-Ergodicity is a property of the map, $T$, and the invariant measure, $\mu$. For a given map, $T$, there need not be a unique invariant measure. 
+
+
+Ergodicity is a property of the map, $T$, and the invariant measure, $\mu$. For a given map, $T$, there need not be a unique invariant measure.
 For example, consider a map which has 2 fixed points, $x_1$ and $x_2$ with $T(x_1) = x_1$ and $T(x_2)=x_2$.
 The point measures $\mu_1 = \delta(x-x_1)$ and $\mu_2 = \delta(x-x_2)$ are both invariant measures with respect to $T$ and both are ergodic.
-Physically, different invariant measures therefore correspond to different notions of typicality. 
+Physically, different invariant measures therefore correspond to different notions of typicality.
 The fixed points example is trivial here:  the measures $\mu_1$ and $\mu_2$ describe the typical behaviour of trajectories that start at one fixed point or the other.
 In more complex situations, invariant sets can be less trivial than simple fixed points.
 This has practical implications for experiments or simulations where the choice of invariant measure may correspond to particular explicit (or implicit) choices that are made in preparing samples or initial conditions.
-What is then typical behaviour for one experimental protocol might be highly atypical for another. 
+What is then typical behaviour for one experimental protocol might be highly atypical for another.
 Hence the mathematical question of uniqueness of the invariant measure and the choice of measure when it is not unique can be more practically consequential than it might first appear.
 
 If a map admits multiple invariant measures, all, some or none of them may be ergodic.
-However, if a map admits a unique invariant measure, it must be ergodic. 
+However, if a map admits a unique invariant measure, it must be ergodic.
 This is easy to see by contradiction: assume that a map admits a unique invariant measure, $\mu$ and it is {\em not} ergodic.
 If $\mu$ is not ergodic, there must exist an invariant set, $A$, such that $T(A) = A$ and $0 < \mu(A) < 1$.
 We can therefore define a new measure $\mu_A$ which is defined as follows for any set $B$:
@@ -160,26 +178,25 @@ Now for any set, $B$, we can reason as follows, using the facts that $A$ is an i
 \begin{align*}
 \mu_A(T(B)) &= \mu(A \cap T(B)) \\
 & = \mu(T(A) \cap T(B))  \\
-& = \mu(T(A \cap B)) \\ 
+& = \mu(T(A \cap B)) \\
 & = \mu(A \cap B) \\
-& = \mu_A(B). & 
+& = \mu_A(B). &
 \end{align*}
 Thus $\mu_A$ is an invariant measure which contradicts the assumption that $\mu$ is the unique invariant measure.
 Therefore unique invariant measures must be ergodic.
 As seen above, the reverse need not be true: ergodic invariant measures need not be unique.
 
-\end{itemize}
 
 \section{Stationary stochastic processes as dynamical systems}
 \label{sec-stochastic-DS}
 As a physicist, one of the more difficult aspects of ergodic theory is understanding how the above notion of ergodicity developed for deterministic dynamical systems applies to stochastic processes where we tend to think of ergodicity in terms of the equality of time averages and ensemble averages.
 In the case of deterministic dynamics, randomness can be introduced only via random choice of initial conditions.
 We can then think of the measure $\mu$ (suitably normalised) as a probability measure on the phase space and we have a random process albeit with the sole source of randomness being the choice of initial condition.
-Stochastic processes on the other hand have intrinsically random dynamics for example encoded by the transition kernel of a Markov chain or by the explicit presence of a random driving term as found in stochastic differential equations. 
+Stochastic processes on the other hand have intrinsically random dynamics for example encoded by the transition kernel of a Markov chain or by the explicit presence of a random driving term as found in stochastic differential equations.
 The definition of ergodicity in terms of invariant sets discussed in the previous section initially doesn't seem natural since the image of any set is random.
-The key to describing stochastic and deterministic dynamics within a single conceptual framework is the realisation that a very broad class of stochastic processes are equivalent to deterministic dynamical systems on an enlarged phase space. 
-This construction is not unique. 
-A common feature, however, is that the enlarged phase space is always much larger because points in the enlarged phase space correspond to paths or sequences. 
+The key to describing stochastic and deterministic dynamics within a single conceptual framework is the realisation that a very broad class of stochastic processes are equivalent to deterministic dynamical systems on an enlarged phase space.
+This construction is not unique.
+A common feature, however, is that the enlarged phase space is always much larger because points in the enlarged phase space correspond to paths or sequences.
 We now describe two different perspectives
 
 \subsection{Canonical (path space) representation of stationary stochastic processes}
@@ -195,24 +212,24 @@ A point $\omega$ in the path space corresponds to a trajectory of the original p
 \omega &= (\ldots x_{-2}, x_{-1}, x_0, x_1, x_2 \ldots).
 \end{align}
 Any  process can be represented as a deterministic dynamical system on the path space where the dynamics are generated by the so-called {\em shift map}, $\theta: \Omega \to \Omega$.
-The shift is defined as follows. 
+The shift is defined as follows.
 For any $\omega \in \Omega$, the $n^{\text{th}}$ entry of $\theta\, \omega$ is
 \begin{align}
 \label{eq-shift-map}
 (\theta\, \omega)_n & = \omega_{n+1}.
 \end{align}
-The shift map operates like a ticker tape. 
+The shift map operates like a ticker tape.
 It advances each path in $\Omega$ by a single time step.
 
 To complete the construction of a deterministic dynamical system in the spirit of section \ref{sec-deterministic-DS}, we need an invariant measure on the path space $\Omega$.
-The stationary law, $\pi_*$, of the original stochastic process induces a probability measure, $\mu$, on the path space, $\Omega$ - essentially assigning a probability to each path based on how likely it is.  
+The stationary law, $\pi_*$, of the original stochastic process induces a probability measure, $\mu$, on the path space, $\Omega$ - essentially assigning a probability to each path based on how likely it is.
 Since the process is stationary, $\mu$ is invariant under the shift operator, $\theta$.
-The notion of ergodicity introduced in section \ref{sec-deterministic-DS} for measure preserving dynamical systems now applies directly to the shift map, $\theta$, acting on path space, $\Omega$ with the induced invariant measure, $\mu$. 
+The notion of ergodicity introduced in section \ref{sec-deterministic-DS} for measure preserving dynamical systems now applies directly to the shift map, $\theta$, acting on path space, $\Omega$ with the induced invariant measure, $\mu$.
 
-The question of uniqueness can be subtle. 
-Given a stationary process, the corresponding induced invariant measure is unique in the sense that the joint law of the stationary process essentially is the induced path space measure. 
+The question of uniqueness can be subtle.
+Given a stationary process, the corresponding induced invariant measure is unique in the sense that the joint law of the stationary process essentially is the induced path space measure.
 However, given an underlying stochastic dynamic, for example a Markov process, it may have more than one stationary distribution.
-When discussing uniqueness, it is therefore important to specify whether primacy is given to the dynamic or to a specific stationary law. 
+When discussing uniqueness, it is therefore important to specify whether primacy is given to the dynamic or to a specific stationary law.
 To complicate matters further, even when the stationary law and the corresponding induced invariant measure is unique, the argument of the previous section does not guarantee ergodicity since it is possible for the shift map on path space to admit other invariant measures that have nothing to do with the stationary law.
 
 Leaving this issue aside, if the shifted system is ergodic then Birkhoff's Theorem holds:
@@ -222,7 +239,7 @@ Leaving this issue aside, if the shifted system is ergodic then Birkhoff's Theor
 for any trajectory $\omega \in \Omega$ and any integrable function, $F$ on path space.
 However, when stochastic process are used in applications or modelling, we do not usually think of time and ensemble averages over trajectories in path space.
 To obtain the more usual expression of Birkhoff's theorem for stochastic processes, we choose particular observables that pick out regular functions of single variables, $F(\omega) = f((\omega)_0)$.
-Since this observable depends only on a single coordinate, in this case $(\omega)_0 = x_0$, the integral on the RHS only depends on the one-dimensional marginal of the path space induced measure $\mu$. 
+Since this observable depends only on a single coordinate, in this case $(\omega)_0 = x_0$, the integral on the RHS only depends on the one-dimensional marginal of the path space induced measure $\mu$.
 Moreover, since the process is stationary, this one-dimensional marginal distribution is the stationary distribution of the original stochastic process.
 We then have
 \begin{align}
@@ -238,13 +255,13 @@ For non-trivial cases, however, the measure $\mu$ is potentially very complicate
 
 \subsection{Skew-product representation of random dynamical systems}
 
-The skew-product representation is applicable when a stochastic process can be separated into a deterministic part and a random driving term. 
+The skew-product representation is applicable when a stochastic process can be separated into a deterministic part and a random driving term.
 The general form is
 \begin{align}
 \label{eq-RDS}
 X_{n+1} &= F(X_n, \xi_{n+1}),
 \end{align}
-where the $X_n$ take values in a state space, $S$, and the $\xi_n$ are random variables taking values in a ``noise'' space $\Xi$. 
+where the $X_n$ take values in a state space, $S$, and the $\xi_n$ are random variables taking values in a ``noise'' space $\Xi$.
 A very simple example is the discrete Ornstein Uhlenbeck process:
 \begin{align}
 \label{eq-discrete-OU}
@@ -252,9 +269,9 @@ x_{n+1} &= a\,x_n + \xi_{n+1},
 \end{align}
 where the $\xi_n$ are i.i.d. random variables and we assume $\left| a \right| <1$ to ensure the existence of a stationary distribution.
 To represent stochastic processes of the form Eq.~(\ref{eq-RDS}) as a deterministic system on a larger phase space, we again use the notion of
-paths. 
+paths.
 This time however, a path $\xi =  (\ldots \xi_{-2}, \xi_{-1}, \xi_0, \xi_1, \xi_2 \ldots)$ is a noise realisation.
-Noise realisations are bi-infinite sequences living in the space $\Xi^\mathbb{Z}$. 
+Noise realisations are bi-infinite sequences living in the space $\Xi^\mathbb{Z}$.
 The deterministic dynamical system equivalent to the process Eq.~(\ref{eq-RDS})  is the skew-product map, $\Theta$, which maps the extended phase space $\Omega = S \times \Xi^\mathbb{Z} $ to itself.
 For a state $x \in S$ and a noise realisation, $\xi \in \Xi^\mathbb{Z}$, the skew-product map is defined
 \begin{align}
@@ -262,8 +279,8 @@ For a state $x \in S$ and a noise realisation, $\xi \in \Xi^\mathbb{Z}$, the ske
 \end{align}
 where $\theta$ is again the shift map, (\ref{eq-shift-map}), now acting on noise realisations rather than on the trajectories themselves.
 In the skew-product formulation, the extended state space $\Omega = S \times \Xi^\mathbb{Z} $ cleanly separates the dynamical state from the noise.
-This is advantageous if the driving noise is i.i.d. as is common in many applications. 
-The induced invariant measure on the $ \Xi^\mathbb{Z}$ component of the extended phase space is then simply the product measure. 
+This is advantageous if the driving noise is i.i.d. as is common in many applications.
+The induced invariant measure on the $ \Xi^\mathbb{Z}$ component of the extended phase space is then simply the product measure.
 Any residual complexity of the induced invariant measure is restricted to the state space component, $S$.
 
 In addition, the separation into state and noise allows one to study what happens to the deterministic part of the dynamics for a fixed realisation of the noise.
@@ -272,11 +289,11 @@ This is defined for each point $x \in S$ as
 \begin{align}
 \varphi(n, \xi)(x) = F_{\xi_n} \circ \cdots \circ F_{\xi_1} (x)
 \end{align}
-where $F_{x_i}$ is shorthand for the function $F(., \xi_i)$ in Eq.~(\ref{eq-RDS}). 
+where $F_{x_i}$ is shorthand for the function $F(., \xi_i)$ in Eq.~(\ref{eq-RDS}).
 It is here that the sub-field of random dynamical systems differs in perspective from the general study of stochastic processes. By fixing the noise realisation, time-asymptotic dynamical properties of the deterministic evolution map, $\varphi(n, \xi)$, such as invariant sets, attractors and sensitive dependence on initial conditions can be identified and their average properties then studied by averaging over noise realisations later.
 
-The skew-product representation is natural for modelling many physical systems where noise is often thought of as modelling exogenous fluctuations in environmental conditions. 
-In continuous time, it is a very natural way to think about stochastic differential equations without assuming the semi-Martingale property required for Ito calculus. 
+The skew-product representation is natural for modelling many physical systems where noise is often thought of as modelling exogenous fluctuations in environmental conditions.
+In continuous time, it is a very natural way to think about stochastic differential equations without assuming the semi-Martingale property required for Ito calculus.
 Furthermore,  subject to mild assumptions, every Markov process $\left\{ X_n\right\}_{n \in \mathbb{Z}}$ (and by extension any finite memory recursive processes like ARMA models) also has a skew-product representation:
 \begin{align}
 \label{eq-skew-product-Markov}
@@ -285,7 +302,7 @@ X_{n+1} &= F(X_n, U_{n+1})
 where the $U_n$ are i.i.d. uniform random variables on $[0,1]$.
 To see this, consider a discrete Markov chain on a state space, $S$, with transition kernel, $P(x, y)$.
 Given any state, $x \in S$, $P(x, y)$ is a probability distribution over $y$.
-Let $\mathcal{F}_x(y)$ be the corresponding cumulative distribution function (CDF). 
+Let $\mathcal{F}_x(y)$ be the corresponding cumulative distribution function (CDF).
 Like any distribution on $\mathbb{R}$, the distribution $P(x, y)$  it can be generated from a uniform random variable using the inverse of its CDF.
 That is to say
 \begin{align}
@@ -302,7 +319,7 @@ In the Gaussian case, $\xi_i \sim N(\mu_\xi, \sigma_\xi^2)$, we can use the fact
 X_n \sim N(m, v)
 \end{align}
 where the mean, $m$, and variance, $v$, are to be determined. Then $a X_n \sim N(a m, a^2 v)$.
-Using Eq.~(\ref{eq-discrete-OU}) and the fact that at stationarity, $X_{n+1} \sim X_n$, we quickly find that 
+Using Eq.~(\ref{eq-discrete-OU}) and the fact that at stationarity, $X_{n+1} \sim X_n$, we quickly find that
 \begin{align}
 m & = \frac{\mu_\xi}{1-a}\\
 v &= \frac{\sigma_\xi^2}{1-a^2},
@@ -322,14 +339,14 @@ Now sum from $n=0$ to $N-1$ and divide by $N$ to obtain the required time averag
 \nonumber (1 - a^2) \frac{1}{N} \sum_{n=0}^{N-1} X_n^2 & =  \frac{1}{N} \sum_{n=0}^{N-1} \xi_{n+1}^2 \\
  \nonumber &+ 2 a  \frac{1}{N}\sum_{n=0}^{N-1}  X_n \xi_{n+1} \\
  \label{eq-time-average-variance}& - \frac{X_N^2 - X_0^2}{N}
-\end{align} 
-As $N \to \infty$, the first term on the right hand side converges to $\sigma_\xi^2$ by the Strong Law of Large Numbers. 
+\end{align}
+As $N \to \infty$, the first term on the right hand side converges to $\sigma_\xi^2$ by the Strong Law of Large Numbers.
 The second term converges to zero by the Martingale Strong Law of Large Numbers.
-The third term also converges to zero. 
+The third term also converges to zero.
 Intuitively this is because $X_N$ stays of order one almost surely but a full proof is technical.
 We then conclude that the time average of $X^2$ is equal to the variance of the stationary distribution of $X$ as expected:
 \begin{align}
-\mathbb{T}\left[ X^2\right] = 
+\mathbb{T}\left[ X^2\right] =
 \frac{1}{N} \sum_{n=0}^{N-1} X_n^2  & = \frac{\sigma_\xi^2}{1-a^2} = \mathbb{E}_{\pi_*^a}\left[ X^2\right].
 \end{align}
 Since Gaussian examples, tend  to be overemphasised due to their tractability, an interesting non-Gaussian case is symmetric Bernoulli noise
@@ -349,7 +366,7 @@ Repeating the previous calculation we find that
 \label{eq-time-average-variance-Bernoullli-noise}
 \mathbb{T}\left[ X^2\right] =  &= \frac{1}{1-a^2}.
 \end{align}
-Ensemble averages for the Bernoulli case are difficult to calculate explicitly because the nature of  the stationary distribution, $\pi_*^a(x)$, as a function of $a$ is surprisingly complicated. 
+Ensemble averages for the Bernoulli case are difficult to calculate explicitly because the nature of  the stationary distribution, $\pi_*^a(x)$, as a function of $a$ is surprisingly complicated.
 It was characterised in \cite{solomyak1995random} as follows:
 \begin{itemize}
 \item $ 0< a < \frac{1}{2}$:  $\pi_*^a(x)$ is singular and supported on a Cantor set of dimension $\log 2 / \log a^{-1}$.
@@ -364,17 +381,17 @@ For example, when $a=\frac{1}{2}$,
 \end{align}
 This agrees withe the time-averaged variance given by Eq.~(\ref{eq-time-average-variance-Bernoullli-noise}) with $a=\frac{1}{2}$, as it must since the process is ergodic.
 %\begin{itemize}
-%\item Suppose we have a stationary discrete time stochastic process, $(\ldots, x_{-1}, x_0, x_1, x_2,\ldots)$, where the $x_i$ are elements of an underlying state space, $S$. 
+%\item Suppose we have a stationary discrete time stochastic process, $(\ldots, x_{-1}, x_0, x_1, x_2,\ldots)$, where the $x_i$ are elements of an underlying state space, $S$.
 %Let us denote the stationary distribution of this process by $\pi_*$.
-%\item Construct the path space, $\Omega = S^{\mathbb{Z}}$. This is the set of all possible trajectories of the stochastic process. I am deliberately calling this $\Omega$ since it is the 
+%\item Construct the path space, $\Omega = S^{\mathbb{Z}}$. This is the set of all possible trajectories of the stochastic process. I am deliberately calling this $\Omega$ since it is the
 %path space (not the state space, $S$) that plays the role of the phase space in the deterministic case.
-%\item 
+%\item
 %\item
 %We now define the shift operator $T\, : \, \Omega \mapsto \Omega$ on the path space. For any trajectory $\omega = (\ldots, x_{-1}, x_0, x_1, x_2,\ldots)$, the $n^\text{th}$ entry of the trajectory $T \omega$ is given by
 %\begin{align}
 %\left( T\omega \right) _n & =  \left( \omega \right)  = x_{n+1}.
 %\end{align}
-%That is to say, the shift map applied to a trajectory moves the time index forward by one step. 
+%That is to say, the shift map applied to a trajectory moves the time index forward by one step.
 %As a map of the path space, the shift map $T$ is deterministic.
 %\item
 %Since the original stochastic process is stationary, $x_{n+1}$ has the same distribution as $x_n$ for all $n$ (invariance of the distribution with respect to time shift is usually taken as the definition of first order stationarity.)
@@ -387,10 +404,10 @@ This agrees withe the time-averaged variance given by Eq.~(\ref{eq-time-average-
 %\lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} F(T^n \omega) = \int_\Omega f(\omega) d\mu(\omega)
 %\end{align}
 %for any trajectory $\omega \in \Omega$ and any integrable function, $F$ on path space.
-%\item 
+%\item
 %However, we do not usually think of time and ensemble averages over trajectories in path space.
 %To obtain the more usual expression of Birkhoff's theorem for stochastic processes, we choose particular observables that pick out regular functions of single variables, $F(\omega) = f((\omega)_0)$.
-%Since this observable depends only on a single coordinate, in this case $(\omega)_0 = x_0$, the integral on the RHS only depends on the one-dimensional marginal of the path space induced measure $\mu$. 
+%Since this observable depends only on a single coordinate, in this case $(\omega)_0 = x_0$, the integral on the RHS only depends on the one-dimensional marginal of the path space induced measure $\mu$.
 %Moreover, since the process is stationary, this one-dimensional marginal distribution is the stationary distribution of the original stochastic process.
 %We then have
 %\begin{align}
@@ -403,7 +420,7 @@ This agrees withe the time-averaged variance given by Eq.~(\ref{eq-time-average-
 %Give example of discrete analogue of Ornstein-Uhlenbeck process driven by Bernoulli noise \cite{solomyak1995random}:
 %\begin{align}
 %x_{n+1} &= a\,x_n + \xi_{n+1}
-%\end{align} 
+%\end{align}
 %where $\xi_n \in  \left\{+1, -1 \right\}$ with equal probability.
 %For $a = \frac{1}{2}$ for example the stationary density,  $\pi_* = \text{Unif}(-2,2)$.  Time averages and ensemble averages for simple moments can be calculated explicitly and shown to agree.
 %
@@ -412,17 +429,17 @@ This agrees withe the time-averaged variance given by Eq.~(\ref{eq-time-average-
 \section{Infinite ergodicity}
 
 Infinite ergodic theory extends some aspects of ergodic theory to recurrent dynamics for which an invariant measure exists but is not normalisable, $\mu(\Omega) = \infty$.
-A characteristic feature is that almost all sets, $A \subset \Omega$,  are visited infinitely often but the mean return time, $\mathbb{E}\left[\tau_A\right]$,  is infinite. 
+A characteristic feature is that almost all sets, $A \subset \Omega$,  are visited infinitely often but the mean return time, $\mathbb{E}\left[\tau_A\right]$,  is infinite.
 Mathematically, this is happens when the distribution of $\tau_A$ has sufficiently heavy tails that $\mathbb{E}\left[ \tau_A\right]$ does not exist.
 Physically it means that for almost all sets, $A$,  the dynamics visits $A$ infinitely many times but nevertheless spends only a vanishing proportion of the {\em total} time in $A$.
 This is possible because excursions from $A$ can be very long.
 
 Birkhoff's Theorem is often trivial because time averages and recurrence frequencies tend to zero.
-Infinite ergodic theory then has less to do with equality of time and ensemble averages. 
+Infinite ergodic theory then has less to do with equality of time and ensemble averages.
 Instead of the time-average of an observable, $f$, the central object of study is the time cumulative sum of $f$:
 \begin{align}
 \label{eq-timeCumulativeSum}
-S_N f(x) &= \sum_{n=0}^{N-1} f(T^n x). 
+S_N f(x) &= \sum_{n=0}^{N-1} f(T^n x).
 \end{align}
 For finite ergodic systems, time cumulative sums grow linearly with $N$ at a rate which is asymptotically deterministic:
 \begin{align}
@@ -433,15 +450,15 @@ In infinite ergodic systems, by contrast, time cumulative sums grow sub-linearly
 S_N f(x) & \sim a_N \, \zeta
 \end{align}
 where $a_N < N$ and $\zeta$ is a random variable with a non-trivial distribution.
-The sub-linear scaling of time cumulative sums explains why ordinary time averages and recurrence frequencies go to zero in such systems. 
+The sub-linear scaling of time cumulative sums explains why ordinary time averages and recurrence frequencies go to zero in such systems.
 Asymptotic randomness means that different trajectories retain order 1 differences forever.
 This feature makes infinite ergodic systems fundamentally different from a physical perspective.
 
 In stochastic processes, the first example of infinite recurrence times that often comes to mind is the simple random walk on $\mathbb{Z}$.
 Does the simple random walk provide an illustrative example of infinite ergodicity?
-I would argue this is not immediately obvious because the simple random walk is not stationary. 
-We cannot proceed as in the previous section by taking the invariant measure to be the probability measure induced on path space by the stationary probability distribution of the stochastic process. 
-However we do not require the invariant measure to be a probability measure (normalisable). 
+I would argue this is not immediately obvious because the simple random walk is not stationary.
+We cannot proceed as in the previous section by taking the invariant measure to be the probability measure induced on path space by the stationary probability distribution of the stochastic process.
+However we do not require the invariant measure to be a probability measure (normalisable).
 What alternative does this enable?
 The transition probabilities for the simple random walk are:
 \begin{align}
@@ -457,7 +474,7 @@ P(i,j) = \left\{
 The so-called counting measure on $\mathbb{Z}$ is defined as follows.
 For any $A \subset \mathbb{Z}$:
 \begin{align}
-\mu(A) = \left\{  
+\mu(A) = \left\{
 \begin{array}{ll}
 | A | & \text{if $A$ is finite}\\
 \infty & \text{otherwise}
@@ -471,17 +488,17 @@ Note that although the counting measure on $\mathbb{Z}$ is not normalisable, it 
 & = \frac{1}{2} + \frac{1}{2}  = \mu(\left\{ i \right\} ).
 \end{align*}
 Physically, this simply means that at each step, there is as much probability mass entering each site  $i \in \mathbb{Z}$  from neighbouring sites as there is leaving due to hopping.
-The counting measure on $\mathbb{Z}$ can now be used to induce an invariant (but non-normalisable) measure on the path space of the simple random walk. 
+The counting measure on $\mathbb{Z}$ can now be used to induce an invariant (but non-normalisable) measure on the path space of the simple random walk.
 A slightly unintuitive aspect of this construction is that this induced measure on path space is stationary even though the original stochastic process is not.
 By taking $f(x) = 1_{\left\{0\right\}}(x)$ in Eq.~(\ref{eq-timeCumulativeSum}), we can count the number of visits to site $0$ after time $N$.
 From the theory of random walks one finds
 \begin{align}
-S_N f \sim c \, \sqrt{N} 
+S_N f \sim c \, \sqrt{N}
 \end{align}
 where $c$ has a non-trivial (half normal?) distribution.
-Thus ordinary frequencies vanish but normalised occupation counts remain meaningful. 
+Thus ordinary frequencies vanish but normalised occupation counts remain meaningful.
 
-To avoid giving the impression that infinite ergodicity is a complicated way of describing properties of random walks that are obtainable by other means, it is worth briefly considering a second example: the Pomeau-Manneville map. 
+To avoid giving the impression that infinite ergodicity is a complicated way of describing properties of random walks that are obtainable by other means, it is worth briefly considering a second example: the Pomeau-Manneville map.
 This is a deterministic dynamical system with a compact phase space, $\left[0,1\right]$ where infinite invariant measure arises in a very different way to the simple random walk.
 The map is
 \begin{align}
@@ -502,21 +519,21 @@ If we consider a set which does not include the neutral fixed point at $0$, for 
 \mathbb{P}(\tau_A > n) & \sim n^{-\frac{1}{\alpha}}.
 \end{align}
 These tails are the result of some trajectories getting trapped near the fixed point and taking a long time to escape.
-The parameter value $\alpha=1$ is special. 
-If $\alpha <1$ the return time distribution is still integrable, the invariant measure is finite and ordinary ergodic theory applies. 
+The parameter value $\alpha=1$ is special.
+If $\alpha <1$ the return time distribution is still integrable, the invariant measure is finite and ordinary ergodic theory applies.
 If $\alpha >=1$, the mean return time diverges and we enter the infinite ergodic theory regime.
 Note from Eq.~(\ref{eq-PMrho}) that the invariant measure becomes infinite since $\int_0^\epsilon \rho(x)\,dx$ diverges for any $\epsilon > 0$.
-In this example, infinite measure arises due to the loss of an integrable singularity at a single point in phase space rather than due to trajectories spreading out over infinitely large regions in the case of the random walk example. 
+In this example, infinite measure arises due to the loss of an integrable singularity at a single point in phase space rather than due to trajectories spreading out over infinitely large regions in the case of the random walk example.
 Nevertheless many of the same phenomena are observed as we noted for the random walk example.
 Cumulative occupation counts again scale sub-linearly and after appropriate normalisation converge to a nontrivial random limit.
 This is the aspect that generalises across many examples: infinite ergodic theory is fundamentally about how power law recurrence time statistics lead to persistent randomness in a broad class of deterministic and random dynamical systems.
 
 \section{Nonstationary stochastic processes}
 
-Most nonstationary processes are not recurrent so the notion of infinite ergodicity does not apply to them. 
+Most nonstationary processes are not recurrent so the notion of infinite ergodicity does not apply to them.
 Technically, it is tautological to refer to such processes as non-ergodic since nonstationarity precludes ergodicity in the original sense and non-recurrence precludes the more general notion of infinite ergodicity.
 Nevertheless in applied contexts, authors sometimes emphasise the non-ergodicity of some ``obviously non-ergodic''  nonstationary dynamics.
-This can be because the question of whether individual realisations are representative of the ensemble remains important. 
+This can be because the question of whether individual realisations are representative of the ensemble remains important.
 It can also be because it is possible to find a transformation which isolates a useful ergodic component of the dynamics, either exactly or approximately.
 
 An illustrative example is provided by the multiplicative random walk:
@@ -546,7 +563,7 @@ Therefore, as $n$ gets large, a typical realisation of Eq.~(\ref{eq-GRW}) almost
 \label{eq-GRW-typical}
 X_n \sim X_0\, \mathrm{e}^{\lambda\,n}
 \end{align}
-where $\lambda =\mathbb{E} \left[ \log z \right]$ is often referred to as the Lyapunov exponent (since the typical difference between two different initial conditions $X_0^{(1)}$ and $X_0^{(2)}$ grows as 
+where $\lambda =\mathbb{E} \left[ \log z \right]$ is often referred to as the Lyapunov exponent (since the typical difference between two different initial conditions $X_0^{(1)}$ and $X_0^{(2)}$ grows as
 $\left| X_0^{(1)} - X_0^{(2)} \right|\, e^{\lambda \, n}$.
 On the other hand, since the $z_i$ are iid, the expected value of $X_n$ is given by
 \begin{align}
@@ -557,17 +574,17 @@ Therefore as $n$ gets large
 \mathbb{E}\left[ X_n \right] \sim X_0 \, \mathrm{e}^{\mu\, n},
 \end{align}
 where $\mu = \log \mathbb{E}\left[ z \right]$.
-Since the logarithm is convex, Jensen's inequality tells us that $\lambda < \mu$ in general. 
+Since the logarithm is convex, Jensen's inequality tells us that $\lambda < \mu$ in general.
 Typical trajectories are therefore not representative of the ensemble in the sense that the expected value grows exponentially faster with $n$ than individual trajectories.
-The reason is that the expected value is dominated by large fluctuations which become exponentially rare as $n$ grows but make exponentially large contributions to the average. 
-This mechanism is not a peculiarity of the multiplicative random walk. 
+The reason is that the expected value is dominated by large fluctuations which become exponentially rare as $n$ grows but make exponentially large contributions to the average.
+This mechanism is not a peculiarity of the multiplicative random walk.
 It appears in many areas of statistical physics such as localisation phenomena, glass dynamics, turbulence and random matrix products.
 The multiplicative random walk is just the simplest exactly solvable model of a phenomenon that has wide applicability.
 
 Returning to the discussion of ergodicity, the difference between individual trajectories and the ensemble averaged trajectory of the multiplicative random walk is not directly interpretable as a difference of time and ensemble averages.
  The time average of $X_n$ is either zero or infinite (depending on the sign of $\lambda$.) The ensemble average is $n$ dependent and also becomes either zero or infinite as $n \to \infty$ (depending on the sign of $\mu$.)
 However, there {\em is} an underlying Birkhoff style ergodicity statement encoded in Eq.~(\ref{eq-limlogGRW}).
-To see this, define a new variable, 
+To see this, define a new variable,
 \begin{align}
 \lambda_n = \log X_{n+1} - \log X_{n},
 \end{align}
@@ -577,37 +594,37 @@ The left hand side of Eq.~(\ref{eq-limlogGRW}) is a telescopic sum: $\log X_n - 
 Putting this together, Eq.~(\ref{eq-limlogGRW}) tells us that
 \begin{align}
 \label{eq-Birkhoff-lambda}
-\lim_{n \to \infty} \frac{1}{n} \sum_{i=0}^{n-1} \lambda_i  &= \mathbb{E}\left[ \lambda \right]. 
+\lim_{n \to \infty} \frac{1}{n} \sum_{i=0}^{n-1} \lambda_i  &= \mathbb{E}\left[ \lambda \right].
 \end{align}
-This is Birkhoff's theorem, but for the growth rate of $X_n$ rather than for $X_n$ itself. 
+This is Birkhoff's theorem, but for the growth rate of $X_n$ rather than for $X_n$ itself.
 Note what has happened here: although $X_n$ is trivially non-ergodic, by identifying a transformation of $X_n$ which does possess the ergodicity property  as per Eq.~(\ref{eq-Birkhoff-lambda}), we are able to understand the temporal behaviour of typical realisations of $X_n$ as per Eq.~(\ref{eq-GRW-typical}).
 
-Empirical analogues of this theoretical procedure abound in practical time series analysis and signal processing. 
+Empirical analogues of this theoretical procedure abound in practical time series analysis and signal processing.
 Transformations are commonly used to attempt to isolate a component of the dynamics that is stationary or ergodic (or approximately so in empirical contexts) for observables of interest.
-The objective is usually to find transformations which can be used to improve some a-priori measure of predictive power.  
+The objective is usually to find transformations which can be used to improve some a-priori measure of predictive power.
 In applications, detrending and/or seasonable adjustment may be applied to remove systematic drift or periodic oscillation, differencing may be applied to remove stochastic drift and data transformations may be used to stabilise variance over time.
 A very commonly used transformation for variance stabilisation is the Box-Cox transformation (which includes the log transformation discussed above as a special case):
 \begin{align}
-f_\eta(x) &= 
+f_\eta(x) &=
 \left\{
 \begin{array}{ll}
 \frac{x^{1-\eta} -1}{1- \eta} & \text{if $\eta \neq 1$} \\
- \log x &  \text{if $\eta = 1$} 
+ \log x &  \text{if $\eta = 1$}
 \end{array}
 \right.
 \end{align}
-and its generalisations. 
-Detrending, seasonal adjustment, differencing and data transformation are often combined to find quantities that best achieve this end. 
+and its generalisations.
+Detrending, seasonal adjustment, differencing and data transformation are often combined to find quantities that best achieve this end.
 This is reflected in the exactly solvable example of the multiplicative random walk where differencing of the log of the signal is required to obtain the quantity, $\lambda_n$, that characterises the typical behaviour of individual realisations of the process.
 
 \section{Practical considerations}
 
 In rigorous ergodic theory, ergodicity requires answering a question about the global invariant structure of an entire dynamical system $(\Omega, \mu, T)$:  do all invariant sets have measure 0 or 1?
-In applications, researchers ask a simpler question: are empirical estimators computed from a single trajectory representative of the ensemble of possible trajectories? 
+In applications, researchers ask a simpler question: are empirical estimators computed from a single trajectory representative of the ensemble of possible trajectories?
 As this notes have shown, these questions are closely related theoretically.
 However it is often possible to answer the latter approximately without knowing much about the former.
 
-In practice, only a finite number of trajectories are observed and each is only of finite length, only a limited number of observables are measured and the true underlying dynamics may not even be known. 
+In practice, only a finite number of trajectories are observed and each is only of finite length, only a limited number of observables are measured and the true underlying dynamics may not even be known.
 Under such circumstances it is pretty hopeless to attempt to establish indecomposability of an invariant measure.
 For this reason, weaker or approximate notions of ergodicity are sometimes used in applied work:
 \begin{itemize}
@@ -615,14 +632,14 @@ For this reason, weaker or approximate notions of ergodicity are sometimes used 
 \item ergodicity of higher moments (or of distribution)
 \item ergodicity as an approximate (FAPP etc) or  non-binary property (ergodicity spectrum etc)
 \end{itemize}
-These weaker notions of ergodicity provide useful ways to frame important questions in different domains of application. 
+These weaker notions of ergodicity provide useful ways to frame important questions in different domains of application.
 They are distinct, and more operational in nature, than the elegant definition of measure-theoretic ergodicity that has ultimately allowed mathematicians to unify the study of invariant structures in deterministic dynamical systems, stochastic processes and beyond.
 However this should not preclude their use and more widespread adoption among applied scientists.
-The question of when the statistics of individual trajectories are representative of populations and vice versa is a critical one in many fields. 
+The question of when the statistics of individual trajectories are representative of populations and vice versa is a critical one in many fields.
 The concept of ergodicity too important to be solely an abstraction of mathematics and theoretical physics.
 
 \bibliographystyle{plain}
-\bibliography{refs}
+\bibliography{refs,undermind}
 
 
 \end{multicols}
