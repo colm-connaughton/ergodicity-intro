@@ -98,20 +98,24 @@ Ergodicity is a property of a measure-preserving dynamical system $(\Omega, \mu,
 \item $\mu$ is a measure which assigns a non-negative volume to any subset of the phase space
 \item $T \, :\, \Omega \mapsto \Omega$ is a map which generates dynamics in $\Omega$ by iteration:
 \begin{align}
-x_{n+1} &= T(x_n)
+x_{n+1} &= T(x_n).
 \end{align}
 \end{itemize}
-$T$ is required to be measure-preserving in the sense that
+Measure-preserving means that
 \begin{align}
   \label{eq-measure-preserving}
 \mu(T^{-1} A) & = \mu(A)
 \end{align}
-for all subsets $A \subset \Omega$. Here $T^{-1}(A)$ denotes the preimage of $A$ under the map $T$:
+for all subsets $A \subset \Omega$. 
+In other words, the map $T$ does not shrink or enlarge the volume of any set, it just moves sets around. 
+Here $T^{-1}(A)$ denotes the pre-image of $A$ under the map $T$:
 \begin{align}
   T^{-1}(A) = \{ x \in \Omega \, : \, T(x) \in A \}.
 \end{align}
-In other words, $T^{-1}(A)$ is the set of all points in $\Omega$ that are mapped into $A$ by $T$.
-The use of the preimage is technically important because $T$ need not be invertible.
+In other words, $T^{-1}(A)$ is the set of all points in $\Omega$ that are mapped to $A$ by $T$.
+A set $A$ is said to be {\em invariant} if $T^{-1}(A) = A$.
+Invariant sets are those that remain unchanged under the dynamics $T$.
+The use of the pre-image in these definitions is technically important because $T$ need not be invertible.
 However for the purposes of building intuition, one can restrict to invertible maps
 and think of an invariant measure as satisfying $\mu(T(A)) = \mu(A)$ in Eq.~(\ref{eq-measure-preserving}).
 In addition to being invariant under $T$, the measure, $\mu$, is also required to be finite in the sense that $\mu(\Omega) < \infty$. Typically we normalise so that $\mu(\Omega) = 1$.
@@ -119,11 +123,11 @@ In many examples, the phase space is compact which makes it easier for the total
 
 
 The definition of ergodicity which has proven most fruitful mathematically is surprisingly abstract: a measure preserving dynamical system is ergodic if the only invariant sets have measure zero or 1.
-Here invariant means $T^{-1}(A) = A$, where again the preimage under $T$ is used to allow for the possibility that $T$ is not invertible.
 
 
-A consequence of this definition is the more familiar statement about equality of time averages and phase space averages as expressed by Birkhoff's Theorem:
+It is not immediately obvious that this definition is equivalent to the more common (for physicists) definition of ergodicity in terms of the equality of time averages and phase space averages:
 \begin{align}
+\label{eq-Birkhoff-EoA}
 \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x_0) = \int_\Omega f(x) d\mu(x)
 \end{align}
 for all integrable functions $f$ on $\Omega$ and almost all $x_0$.
@@ -133,8 +137,17 @@ because there are often exceptional cases that do not satisfy the stated propert
 Asserting that the measure of all such exceptions is zero formalises the idea that the exceptions are atypical
 and by implication can be ignored for practical purposes.
 
+Physicists often refer to Eq.~(\ref{eq-Birkhoff-EoA}) as Birkhoff's Theorem. However, for mathematicians, the deep part of Birkhoff's contribution is actually a pointwise statement. Birkhoff's (Pointwise) Ergodic Theorem Theorem states that for a measure preserving dynamical system, $(\Omega, \mu, T)$, the time average of any (integrable) function, $f$, converges to an invariant function, $f^*$:
+\begin{align}
+\label{eq-Birkhoff-pointwise}
+  \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x_0) = f^*(x_0)  
+\end{align}
+for almost all $x_0$ where $f^* \circ T  = f^*$. If, in addition to being measure-preserving, the system $(\Omega, \mu, T)$ is also ergodic, then it can be further shown that any invariant function must be constant on $\Omega$ and, in the case of Eq.~(\ref{eq-Birkhoff-pointwise}), that constant must be equal to the phase space average. From a mathematical perspective, the equality of time averages and phase space averages in Eq.~(\ref{eq-Birkhoff-EoA}) is therefore a corollary for ergodic systems of a deeper theorem guaranteeing that time averages converge in the first place. 
+To avoid confusion around exactly what should be called Birkhoff's Theorem, we shall refer to Eq.~(\ref{eq-Birkhoff-EoA}) as simply ``Equality of Averages''.
+Our purpose in mentioning this here is to indicate that the Equality of Averages is not an obvious consequence of the formal definition of ergodicity in terms of measures of invariant sets. For those interested in a proper account of the mathematical details, see \cite{walters2000introduction}.
+
 Ergodicity can also be thought of as a statement about recurrences (how often a trajectory revisits a set $A \subset \Omega$) : if you follow a single trajectory of the dynamical system and count how often it is in a set $A$, the proportion of iterations the trajectory is in $A$ will converge to  $\mu(A)$.
-Mathematically,  this follows from applying Birkhoff's theorem to the indicator function on $A$,  $1_A(x)$:
+Mathematically,  this follows from applying Equality of Averages, Eq.~(\ref{eq-Birkhoff-EoA}), to the indicator function on $A$,  $1_A(x)$:
 \begin{align}
 \label{eq-recurrences}
 \lim_{N\to \infty} \frac{1}{N} \sum_{n=0}^{N-1} 1_A(T^n x_0) & = \int_\Omega 1_A(x) d\mu = \mu(A).
@@ -142,7 +155,7 @@ Mathematically,  this follows from applying Birkhoff's theorem to the indicator 
 Recurrence frequencies become stable as $N$ grows and are consistent with the invariant measure.
 Let us denote by $\tau_A$ the random variable corresponding to the time that a trajectory takes to revisit $A$ having left it.
 This is called the return time.
-With some technical qualifications, it can be shown \cite{Kac47} that the mean return time, $\mathbb{E}\left[\tau_A\right] = \frac{1}{\mu(A)}$.
+With some technical qualifications, it can be shown \cite{kac1947notion} that the mean return time, $\mathbb{E}\left[\tau_A\right] = \frac{1}{\mu(A)}$.
 Another way to state Eq.~(\ref{eq-recurrences}) is that for almost all sets, $A$, the number of recurrent visits to $A$ asymptotically grows proportional to $N$ :
 \begin{align}
  \sum_{n=0}^{N-1} 1_A(T^n x_0)  \sim c\, N
@@ -152,16 +165,12 @@ where $c>0$ is the inverse of the mean return time.
 
 Ergodicity provides a precise notion of typicality: in an ergodic system almost all initial
 conditions are typical in the sense that they will eventually explore the full phase space.
-The Goldstein and Lebowitz typicality account of ergodicity asserts that for a broad class of many body physical systems, typical trajectories correspond to thermomodynamic equilibrium states.
-This point of view holds that typicality of equilibrium states is more important for the foundations of statistical mechanics than proving that the underlying equations of motion are ergodic with respect  to the Gibbs measure in the strict mathematical sense.
-
-
-Ergodicity is a property of the map, $T$, and the invariant measure, $\mu$. For a given map, $T$, there need not be a unique invariant measure.
+It is worth emphasising that in this mathematical setting, ergodicity is a property of the map, $T$, and the invariant measure, $\mu$. For a given map, $T$, there need not be a unique invariant measure.
 For example, consider a map which has 2 fixed points, $x_1$ and $x_2$ with $T(x_1) = x_1$ and $T(x_2)=x_2$.
 The point measures $\mu_1 = \delta(x-x_1)$ and $\mu_2 = \delta(x-x_2)$ are both invariant measures with respect to $T$ and both are ergodic.
 Physically, different invariant measures therefore correspond to different notions of typicality.
-The fixed points example is trivial here:  the measures $\mu_1$ and $\mu_2$ describe the typical behaviour of trajectories that start at one fixed point or the other.
-In more complex situations, invariant sets can be less trivial than simple fixed points.
+The fixed points example is trivial here, although in more complex situations, invariant sets can be less trivial than simple fixed points.  The measures $\mu_1$ and $\mu_2$ describe the typical behaviour of trajectories that start at one fixed point or the other.
+In describing this typical behaviour we must recognise that the fixed points themselves may not be typical with respect to another measure on the phase space.
 This has practical implications for experiments or simulations where the choice of invariant measure may correspond to particular explicit (or implicit) choices that are made in preparing samples or initial conditions.
 What is then typical behaviour for one experimental protocol might be highly atypical for another.
 Hence the mathematical question of uniqueness of the invariant measure and the choice of measure when it is not unique can be more practically consequential than it might first appear.
@@ -169,6 +178,7 @@ Hence the mathematical question of uniqueness of the invariant measure and the c
 If a map admits multiple invariant measures, all, some or none of them may be ergodic.
 However, if a map admits a unique invariant measure, it must be ergodic.
 This is easy to see by contradiction: assume that a map admits a unique invariant measure, $\mu$ and it is {\em not} ergodic.
+We continue to assume that $T$ is invertible so we can dispense with the distinction between pre-images and forward-images.
 If $\mu$ is not ergodic, there must exist an invariant set, $A$, such that $T(A) = A$ and $0 < \mu(A) < 1$.
 We can therefore define a new measure $\mu_A$ which is defined as follows for any set $B$:
 \begin{align}
@@ -186,10 +196,22 @@ Thus $\mu_A$ is an invariant measure which contradicts the assumption that $\mu$
 Therefore unique invariant measures must be ergodic.
 As seen above, the reverse need not be true: ergodic invariant measures need not be unique.
 
+Much of the motivation for studying ergodicity in dynamical systems was motivated by Boltzmann's work on statistical mechanics. However, proving strict ergodicity for the equations of motion governing many-body physical systems turned out to be extremely difficult. 
+This, together with arguments by Lebowitz \cite{lebowitz1993boltzmann}, Goldstein \cite{goldstein2001boltzmann} and others, has provoked debate in physics as to whether strict ergodicity is truly required as an additional hypothesis for statistical mechanics to work. 
+For example, in \cite{LucenteEtAl_KhinchinErgodicity}, it is shown that important features of equilibrium statistical mechanics are found even for some integrable systems like the Toda model. 
+This is despite the fact that such systems cannot exhibit the molecular chaos usually associated with the ergodic hypothesis.
+Many physicists now believe that what really matters is that, for a broad class of stationary many-body physical systems, {\em typical} trajectories correspond to thermomodynamic equilibrium states.
+This viewpoint is sometimes referred to as the typicality account of ergodicity.
+It is related to, but conceptually distinct from, the notion of typicality introduced above. 
+It does not require atypical trajectories to have measure zero. 
+Rather, it requires that, as the number of degrees of freedom grows, the phase space volume of the set of trajectories that do not correspond to equilibrium states becomes arbitrarily small as a proportion of the total phase space volume. 
+The typicality account is discussed further in \cite{Reichert_StationarityTypicalityErgodicity}.
+
+
 
 \section{Stationary stochastic processes as dynamical systems}
 \label{sec-stochastic-DS}
-As a physicist, one of the more difficult aspects of ergodic theory is understanding how the above notion of ergodicity developed for deterministic dynamical systems applies to stochastic processes where we tend to think of ergodicity in terms of the equality of time averages and ensemble averages.
+As a physicist, one of the more difficult aspects of ergodic theory is understanding how the above notion of ergodicity developed for deterministic dynamical systems applies to stochastic processes where we again tend to think of ergodicity in terms of the equality of time averages and ensemble averages.
 In the case of deterministic dynamics, randomness can be introduced only via random choice of initial conditions.
 We can then think of the measure $\mu$ (suitably normalised) as a probability measure on the phase space and we have a random process albeit with the sole source of randomness being the choice of initial condition.
 Stochastic processes on the other hand have intrinsically random dynamics for example encoded by the transition kernel of a Markov chain or by the explicit presence of a random driving term as found in stochastic differential equations.
@@ -222,30 +244,30 @@ The shift map operates like a ticker tape.
 It advances each path in $\Omega$ by a single time step.
 
 To complete the construction of a deterministic dynamical system in the spirit of section \ref{sec-deterministic-DS}, we need an invariant measure on the path space $\Omega$.
-The stationary law, $\pi_*$, of the original stochastic process induces a probability measure, $\mu$, on the path space, $\Omega$ - essentially assigning a probability to each path based on how likely it is.
+The joint law of the original stochastic process induces a probability measure, $\mu$, on the path space, $\Omega$ - essentially assigning a probability to each path based on how likely it is.
 Since the process is stationary, $\mu$ is invariant under the shift operator, $\theta$.
 The notion of ergodicity introduced in section \ref{sec-deterministic-DS} for measure preserving dynamical systems now applies directly to the shift map, $\theta$, acting on path space, $\Omega$ with the induced invariant measure, $\mu$.
 
 The question of uniqueness can be subtle.
-Given a stationary process, the corresponding induced invariant measure is unique in the sense that the joint law of the stationary process essentially is the induced path space measure.
+Given a stationary process, the corresponding induced invariant measure is unique in the sense that the joint law of the stationary process is essentially equivalent to the induced path space measure.
 However, given an underlying stochastic dynamic, for example a Markov process, it may have more than one stationary distribution.
 When discussing uniqueness, it is therefore important to specify whether primacy is given to the dynamic or to a specific stationary law.
-To complicate matters further, even when the stationary law and the corresponding induced invariant measure is unique, the argument of the previous section does not guarantee ergodicity since it is possible for the shift map on path space to admit other invariant measures that have nothing to do with the stationary law.
+To complicate matters further, even when the stationary law and the corresponding induced invariant measure are unique, the argument of the previous section does not guarantee ergodicity since it is possible for the shift map on path space to admit other invariant measures that have nothing to do with the stationary law.
 
-Leaving this issue aside, if the shifted system is ergodic then Birkhoff's Theorem holds:
+Leaving this issue aside, if the shifted system is ergodic then Equality of Averages holds:
 \begin{align}
 \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} F(T^n \omega) = \int_\Omega f(\omega) d\mu(\omega)
 \end{align}
 for any trajectory $\omega \in \Omega$ and any integrable function, $F$ on path space.
-However, when stochastic process are used in applications or modelling, we do not usually think of time and ensemble averages over trajectories in path space.
-To obtain the more usual expression of Birkhoff's theorem for stochastic processes, we choose particular observables that pick out regular functions of single variables, $F(\omega) = f((\omega)_0)$.
+However, when stochastic processes are used in applications or modelling, we do not usually think of time and ensemble averages over trajectories in path space.
+To obtain the more usual expression of Equality of Averages for stochastic processes, we choose particular observables that pick out regular functions of single variables, $F(\omega) = f((\omega)_0)$.
 Since this observable depends only on a single coordinate, in this case $(\omega)_0 = x_0$, the integral on the RHS only depends on the one-dimensional marginal of the path space induced measure $\mu$.
 Moreover, since the process is stationary, this one-dimensional marginal distribution is the stationary distribution of the original stochastic process.
 We then have
 \begin{align}
 \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x_0) = \int_S f(x) d \pi_*(x) = \mathbb{E}_{\pi_*}[f].
 \end{align}
-This is the more usual form of Birkhoff's Theorem as stated for ergodic stochastic processes.
+This is the more usual form of Equality of Averages as stated for ergodic stochastic processes.
 
 
 While the canonical representation is general for any stationary process, the induced measure, $\mu$, can be doing a lot of work.
@@ -326,7 +348,7 @@ v &= \frac{\sigma_\xi^2}{1-a^2},
 \end{align}
 and the stationary law is
 \begin{align}
-\pi_*^a(x) & = \sqrt{\frac{1-a^2}{2 \pi \sigma_\xi^2 } } \exp \left[ \frac{1-a^2}{2 \sigma_\xi^2} \left(x - \frac{\mu_\xi}{1-a} \right)^2\right].
+\pi_*^a(x) & = \sqrt{\frac{1-a^2}{2 \pi \sigma_\xi^2 } } \exp \left[ -\frac{1-a^2}{2 \sigma_\xi^2} \left(x - \frac{\mu_\xi}{1-a} \right)^2\right].
 \end{align}
 Time averages can also be calculated explicitly. For example, suppose we wish to calculate the time average of $X^2$.
 Assume for simplicity that $\mu_\xi = 0$.
@@ -380,53 +402,9 @@ For example, when $a=\frac{1}{2}$,
  \mathbb{E}_{\pi_*^\frac{1}{2}}\left[ X^2\right] = \int_{-2}^2 \frac{1}{4} x^2 \, dx = \frac{4}{3}.
 \end{align}
 This agrees withe the time-averaged variance given by Eq.~(\ref{eq-time-average-variance-Bernoullli-noise}) with $a=\frac{1}{2}$, as it must since the process is ergodic.
-%\begin{itemize}
-%\item Suppose we have a stationary discrete time stochastic process, $(\ldots, x_{-1}, x_0, x_1, x_2,\ldots)$, where the $x_i$ are elements of an underlying state space, $S$.
-%Let us denote the stationary distribution of this process by $\pi_*$.
-%\item Construct the path space, $\Omega = S^{\mathbb{Z}}$. This is the set of all possible trajectories of the stochastic process. I am deliberately calling this $\Omega$ since it is the
-%path space (not the state space, $S$) that plays the role of the phase space in the deterministic case.
-%\item
-%\item
-%We now define the shift operator $T\, : \, \Omega \mapsto \Omega$ on the path space. For any trajectory $\omega = (\ldots, x_{-1}, x_0, x_1, x_2,\ldots)$, the $n^\text{th}$ entry of the trajectory $T \omega$ is given by
-%\begin{align}
-%\left( T\omega \right) _n & =  \left( \omega \right)  = x_{n+1}.
-%\end{align}
-%That is to say, the shift map applied to a trajectory moves the time index forward by one step.
-%As a map of the path space, the shift map $T$ is deterministic.
-%\item
-%Since the original stochastic process is stationary, $x_{n+1}$ has the same distribution as $x_n$ for all $n$ (invariance of the distribution with respect to time shift is usually taken as the definition of first order stationarity.)
-%This means that $T$ does not change the measure of individual trajectories or sets of trajectories and is thus measure preserving.
-%\item The path space, $\Omega$, together with the induced probability measure, $\mu$ and the shift map, $T$, therefore constitutes a measure preserving dynamical system. It is ergodic if the only invariant sets are trivial.
-%Note that unlike for the deterministic case where lots of different dynamics, $T$, are studied, for stochastic processes, $T$ is always the shift map (although this map obviously depends in a complicated way on the generator of the process.) Similarly, the analogue of the phase space is always the path space not the underlying state space of the stochastic process.
-%\item
-%If the shifted system is ergodic then Birkhoff's Theorem holds:
-%\begin{align}
-%\lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} F(T^n \omega) = \int_\Omega f(\omega) d\mu(\omega)
-%\end{align}
-%for any trajectory $\omega \in \Omega$ and any integrable function, $F$ on path space.
-%\item
-%However, we do not usually think of time and ensemble averages over trajectories in path space.
-%To obtain the more usual expression of Birkhoff's theorem for stochastic processes, we choose particular observables that pick out regular functions of single variables, $F(\omega) = f((\omega)_0)$.
-%Since this observable depends only on a single coordinate, in this case $(\omega)_0 = x_0$, the integral on the RHS only depends on the one-dimensional marginal of the path space induced measure $\mu$.
-%Moreover, since the process is stationary, this one-dimensional marginal distribution is the stationary distribution of the original stochastic process.
-%We then have
-%\begin{align}
-%\lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} f(T^n x_0) = \int_S f(x) d \pi_*(x) = \mathbb{E}_{\pi_*}[f].
-%\end{align}
-%This is the more usual form of Birkhoff's Theorem as stated for ergodic stochastic processes.
-%\item
-%We can again think of this in terms of recurrences: given a set $A \subset S$ (an event) if you observe a single realisation of the stochastic process and count the proportion of time the trajectory visits the set $A$, this will converge to probability of the event $A$ under the stationary distribution of the process.
-%\item
-%Give example of discrete analogue of Ornstein-Uhlenbeck process driven by Bernoulli noise \cite{solomyak1995random}:
-%\begin{align}
-%x_{n+1} &= a\,x_n + \xi_{n+1}
-%\end{align}
-%where $\xi_n \in  \left\{+1, -1 \right\}$ with equal probability.
-%For $a = \frac{1}{2}$ for example the stationary density,  $\pi_* = \text{Unif}(-2,2)$.  Time averages and ensemble averages for simple moments can be calculated explicitly and shown to agree.
-%
-%\end{itemize}
 
 \section{Infinite ergodicity}
+\label{sec-infinite-ergodicity}
 
 Infinite ergodic theory extends some aspects of ergodic theory to recurrent dynamics for which an invariant measure exists but is not normalisable, $\mu(\Omega) = \infty$.
 A characteristic feature is that almost all sets, $A \subset \Omega$,  are visited infinitely often but the mean return time, $\mathbb{E}\left[\tau_A\right]$,  is infinite.
@@ -434,7 +412,7 @@ Mathematically, this is happens when the distribution of $\tau_A$ has sufficient
 Physically it means that for almost all sets, $A$,  the dynamics visits $A$ infinitely many times but nevertheless spends only a vanishing proportion of the {\em total} time in $A$.
 This is possible because excursions from $A$ can be very long.
 
-Birkhoff's Theorem is often trivial because time averages and recurrence frequencies tend to zero.
+Equality of Averages is often trivial because time averages and recurrence frequencies tend to zero.
 Infinite ergodic theory then has less to do with equality of time and ensemble averages.
 Instead of the time-average of an observable, $f$, the central object of study is the time cumulative sum of $f$:
 \begin{align}
@@ -528,15 +506,18 @@ Nevertheless many of the same phenomena are observed as we noted for the random 
 Cumulative occupation counts again scale sub-linearly and after appropriate normalisation converge to a nontrivial random limit.
 This is the aspect that generalises across many examples: infinite ergodic theory is fundamentally about how power law recurrence time statistics lead to persistent randomness in a broad class of deterministic and random dynamical systems.
 
+For further discussion of infinite ergodicity and a more detailed example, see \cite{GiordanoBlossey_GeneralizedGeometricBrownian}. This paper contains explicit calculations for a class of stochastic process which generalises Geometric Brownian motion to include power law drift and diffusion terms. 
+It is shown how appropriate normalisation can be used to extract physically useful information about the long time asymptotics of such processes even when the corresponding Fokker-Plank equation has no normalisable solution.
+
 \section{Nonstationary stochastic processes}
 
-Most nonstationary processes are not recurrent so the notion of infinite ergodicity does not apply to them.
-Technically, it is tautological to refer to such processes as non-ergodic since nonstationarity precludes ergodicity in the original sense and non-recurrence precludes the more general notion of infinite ergodicity.
-Nevertheless in applied contexts, authors sometimes emphasise the non-ergodicity of some ``obviously non-ergodic''  nonstationary dynamics.
+Most nonstationary processes are not recurrent, so the notion of infinite ergodicity introduced in Sec.~\ref{sec-infinite-ergodicity} does not apply to them.
+It is arguably misleading to refer to such non-stationary processes as ``non-ergodic'' since ergodicity as described in Sections \ref{sec-deterministic-DS} and \ref{sec-stochastic-DS} is a property of stationary systems, and non-recurrence precludes the more general notion of infinite ergodicity.
+Nevertheless in some applications, authors do emphasise the non-ergodicity of some ``obviously non-ergodic''  nonstationary dynamics.
 This can be because the question of whether individual realisations are representative of the ensemble remains important.
 It can also be because it is possible to find a transformation which isolates a useful ergodic component of the dynamics, either exactly or approximately.
 
-An illustrative example is provided by the multiplicative random walk:
+An illustrative example is provided by the multiplicative random walk \cite{redner1990random}:
 \begin{align}
 \label{eq-GRW}
 X_{n+1} &= z_n\,X_n
@@ -583,7 +564,7 @@ The multiplicative random walk is just the simplest exactly solvable model of a 
 
 Returning to the discussion of ergodicity, the difference between individual trajectories and the ensemble averaged trajectory of the multiplicative random walk is not directly interpretable as a difference of time and ensemble averages.
  The time average of $X_n$ is either zero or infinite (depending on the sign of $\lambda$.) The ensemble average is $n$ dependent and also becomes either zero or infinite as $n \to \infty$ (depending on the sign of $\mu$.)
-However, there {\em is} an underlying Birkhoff style ergodicity statement encoded in Eq.~(\ref{eq-limlogGRW}).
+However, there {\em is} an underlying Birkhoff style Equality of Averages ergodicity statement encoded in Eq.~(\ref{eq-limlogGRW}).
 To see this, define a new variable,
 \begin{align}
 \lambda_n = \log X_{n+1} - \log X_{n},
@@ -596,7 +577,7 @@ Putting this together, Eq.~(\ref{eq-limlogGRW}) tells us that
 \label{eq-Birkhoff-lambda}
 \lim_{n \to \infty} \frac{1}{n} \sum_{i=0}^{n-1} \lambda_i  &= \mathbb{E}\left[ \lambda \right].
 \end{align}
-This is Birkhoff's theorem, but for the growth rate of $X_n$ rather than for $X_n$ itself.
+This is Equality of Averages, but for the growth rate of $X_n$ rather than for $X_n$ itself.
 Note what has happened here: although $X_n$ is trivially non-ergodic, by identifying a transformation of $X_n$ which does possess the ergodicity property  as per Eq.~(\ref{eq-Birkhoff-lambda}), we are able to understand the temporal behaviour of typical realisations of $X_n$ as per Eq.~(\ref{eq-GRW-typical}).
 
 Empirical analogues of this theoretical procedure abound in practical time series analysis and signal processing.
@@ -613,16 +594,17 @@ f_\eta(x) &=
 \end{array}
 \right.
 \end{align}
-and its generalisations.
+and its generalisations. 
 Detrending, seasonal adjustment, differencing and data transformation are often combined to find quantities that best achieve this end.
 This is reflected in the exactly solvable example of the multiplicative random walk where differencing of the log of the signal is required to obtain the quantity, $\lambda_n$, that characterises the typical behaviour of individual realisations of the process.
+For a more complicated example in the present collection, see \cite{RodriguezRaposoCoelloPulido_ErgodicityTransformation} which exhibits appropriate transformations for processes which combine additive and multiplicative increments. A more empirical approach is described in \cite{Britto_LikelihoodBasedEstimation} which discusses how to find appropriate transformations from data.
 
 \section{Practical considerations}
 
 In rigorous ergodic theory, ergodicity requires answering a question about the global invariant structure of an entire dynamical system $(\Omega, \mu, T)$:  do all invariant sets have measure 0 or 1?
 In applications, researchers ask a simpler question: are empirical estimators computed from a single trajectory representative of the ensemble of possible trajectories?
-As this notes have shown, these questions are closely related theoretically.
-However it is often possible to answer the latter approximately without knowing much about the former.
+As we have discussed, these two questions are closely related theoretically.
+However, it is often possible to answer the second question approximately without knowing much about the answer to the first one.
 
 In practice, only a finite number of trajectories are observed and each is only of finite length, only a limited number of observables are measured and the true underlying dynamics may not even be known.
 Under such circumstances it is pretty hopeless to attempt to establish indecomposability of an invariant measure.
@@ -633,7 +615,7 @@ For this reason, weaker or approximate notions of ergodicity are sometimes used 
 \item ergodicity as an approximate (FAPP etc) or  non-binary property (ergodicity spectrum etc)
 \end{itemize}
 These weaker notions of ergodicity provide useful ways to frame important questions in different domains of application.
-They are distinct, and more operational in nature, than the elegant definition of measure-theoretic ergodicity that has ultimately allowed mathematicians to unify the study of invariant structures in deterministic dynamical systems, stochastic processes and beyond.
+They are distinct, and more operational in nature, than the definition of measure-theoretic ergodicity that has ultimately allowed mathematicians to unify the study of invariant structures in deterministic dynamical systems, stochastic processes and beyond.
 However this should not preclude their use and more widespread adoption among applied scientists.
 The question of when the statistics of individual trajectories are representative of populations and vice versa is a critical one in many fields.
 The concept of ergodicity too important to be solely an abstraction of mathematics and theoretical physics.
@@ -641,10 +623,12 @@ The concept of ergodicity too important to be solely an abstraction of mathemati
 The papers in this collection:
 \cite{ConnaughtonEtAl_WhatIsErgodicity,PetersAdamou_LeverageEfficiency,FlemingEtAl_ErgodicitySpeedAccuracy,UnderwoodPaillusson_SpectroscopicClassification,VerbruggenEtAl_ModelAgnosticSolutions,AdamouEtAl_TwoGrowthRates,VanhoyweghenEtAl_BeyondAsymptotics,Britto_LikelihoodBasedEstimation,Reichert_StationarityTypicalityErgodicity,Fisher_BeyondParametricErgodicity,PetersAdamou_TimeInterpretation,LucenteEtAl_KhinchinErgodicity,Soysal_ErgodicityAssumptionClimate,BaumannEtAl_ErgodicityReinforcementLearning,GiordanoBlossey_GeneralizedGeometricBrownian,RodriguezRaposoCoelloPulido_ErgodicityTransformation}
 
-\cite{redner1990random,walters2000introduction,kac1947notion}
+%\ack{Insert acknowledgment text here.}
+
+
 
 \bibliographystyle{plain}
-\bibliography{refs,undermind}
+\bibliography{refs}
 
 
 \end{multicols}
