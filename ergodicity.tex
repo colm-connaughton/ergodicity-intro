@@ -360,10 +360,12 @@ The probabilistic structure of the process enters this dynamical picture via the
 % \end{align}
 % for any trajectory $\omega \in \Omega$ and any integrable function, $F$ on path space.
 When stochastic processes are used in applications or modelling, we do not usually compute time and ensemble averages over full trajectories in path space. Typically, one considers observables $f$ that depend only on the current state, represented by $f(\omega) = \hat{f}(\omega_0)$ for some function $\hat{f}: S \to \mathbb{R}$. Assuming the path-space measure $\mu$ is ergodic under the shift map $\theta$, Birkhoff's Ergodic Theorem yields for $\mu$-almost all $\omega\in\Omega$ that
-\begin{equation}
-\label{eq-time-space-avg}
-\lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} \hat{f}(X_n(\omega)) = \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} f(\theta^n \omega) = \int_{\Omega} f(\omega) \, d\mu(\omega) = \int_{S} \hat{f}(x) \, d\pi(x) = \mathbb{E}_{\pi}[\hat{f}]
-\end{equation}
+\begin{align}
+\nonumber \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} \hat{f}(X_n(\omega)) &= \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} f(\theta^n \omega) \\
+\nonumber & = \int_{\Omega} f(\omega) \, d\mu(\omega) \\
+\nonumber & = \int_{S} \hat{f}(x) \, d\pi(x)\\
+\label{eq-time-space-avg} &  = \mathbb{E}_{\pi}[\hat{f}]
+\end{align}
 for $\mu$-almost every path $\omega \in \Omega$. This is the standard equality expressing ergodicity for stationary stochastic processes.
 % [UNTIL HERE]
 % When stochastic processes are used in applications or modelling, we do not usually think of time and ensemble averages over trajectories in path space.
@@ -483,8 +485,8 @@ for $\mu$-almost every noise realization $\omega$, convergence of the time avera
 \begin{align}
 \label{eq-time-space-avg-rds}
 \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} f(x_n) &= \lim_{N \to \infty} \frac{1}{N} \sum_{n=0}^{N-1} \hat{f}(\Theta^n(x_0,\omega)) \nonumber\\&= \int_{X\times\Omega} \hat{f}(x,\omega)
-d\nu(x,\omega) 
-=:
+d\nu(x,\omega) \\
+&=:
 \int_X f(x)d\pi(x)=: \mathbb{E}_{\pi}[f].
 \end{align}
 We have used here that $\nu$-almost all $(x_0,\omega)$ implies $\pi$-almost all $x_0\in X$ and $\mu$-almost all $\omega\in\Omega$.
