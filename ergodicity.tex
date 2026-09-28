@@ -123,6 +123,7 @@ In many examples, the phase space is compact which makes it easier for the total
 
 
 The definition of ergodicity which has proven most fruitful mathematically is surprisingly abstract: a measure preserving dynamical system is ergodic if the only invariant sets have measure zero or 1.
+This property is sometimes referred to as metric indecomposability.
 
 
 It is not immediately obvious that this definition is equivalent to the more common (for physicists) definition of ergodicity in terms of the equality of time averages and phase space averages:
@@ -597,17 +598,34 @@ f_\eta(x) &=
 and its generalisations. 
 Detrending, seasonal adjustment, differencing and data transformation are often combined to find quantities that best achieve this end.
 This is reflected in the exactly solvable example of the multiplicative random walk where differencing of the log of the signal is required to obtain the quantity, $\lambda_n$, that characterises the typical behaviour of individual realisations of the process.
-For a more complicated example in the present collection, see \cite{RodriguezRaposoCoelloPulido_ErgodicityTransformation} which exhibits appropriate transformations for processes which combine additive and multiplicative increments. A more empirical approach is described in \cite{Britto_LikelihoodBasedEstimation} which discusses how to find appropriate transformations from data.
+This approach has been very extensively developed in the signal processing and time series analysis literatures.
+The emphasis in these fields tends to be on finding operations which act on non-stationary processes to produce stationary ones, but ergodicity is often implicit in the latter.
+See for example \cite{durbin2012time}. 
+For a more complicated example in the present collection, see \cite{RodriguezRaposoCoelloPulido_ErgodicityTransformation} which exhibits appropriate transformations for processes combining additive and multiplicative increments. 
+A more empirical approach is described in \cite{Britto_LikelihoodBasedEstimation} which discusses how to find appropriate transformations from data.
 
-\section{Practical considerations}
+\section{Operational notions of ergodicity in practical applications }
 
-In rigorous ergodic theory, ergodicity requires answering a question about the global invariant structure of an entire dynamical system $(\Omega, \mu, T)$:  do all invariant sets have measure 0 or 1?
-In applications, researchers ask a simpler question: are empirical estimators computed from a single trajectory representative of the ensemble of possible trajectories?
+Establishment of strict ergodicity requires answering a question about the global invariant structure of an entire dynamical system $(\Omega, \mu, T)$:  do all invariant sets have measure 0 or 1?
+In applications, researchers often ask a simpler question: are empirical estimators computed from a single trajectory representative of the ensemble of possible trajectories?
 As we have discussed, these two questions are closely related theoretically.
-However, it is often possible to answer the second question approximately without knowing much about the answer to the first one.
-
+However, it is often possible to answer the second question approximately without knowing much about the answer to the first one. 
 In practice, only a finite number of trajectories are observed and each is only of finite length, only a limited number of observables are measured and the true underlying dynamics may not even be known.
-Under such circumstances it is pretty hopeless to attempt to establish indecomposability of an invariant measure.
+Under such circumstances it is hopeless to attempt to establish indecomposability of an invariant measure.
+However,  in practice, such detailed structural information is rarely required.
+It may be sufficient that the empirical distributions of finite time and ensemble samples of a particular observable, $f$, are identical to a given degree of statistical significance.
+This is referred to in \cite{UnderwoodPaillusson_SpectroscopicClassification} as Equality of Distributions for the observable, $f$. 
+From the Equality of Distributions perspective, ergodicity becomes a much more operational concept as compared to the  metric indecomposability  idea.
+It remains firmly rooted in the fundamental issue of distinguishing between properties of an ensemble and properties of individual members of that ensemble.
+However, it is no longer a binary property and is much more broadly applicable and is amenable to statistical testing and empirical analysis.
+Less restrictive still,  empirical Equality of Averages  for the observable, $f$, may suffice.
+Metric Indecomposability, Equality of Distributions and Equality of Averages form hierarchy of notions of ergodicity each weaker than the preceding one.
+For many of the applications in the present collection, Equality of Averages for particular observables is sufficient.
+This operational approach is quite far removed from the mathematical description of Sections \ref{sec-deterministic-DS} and \ref{sec-stochastic-DS}.
+However in the preceding sections we have hopefully succeeded in drawing a line from the former to the latter that illustrates how these ideas relate to each other.
+It is not necessary to become an expert in ergodic theory to perform a statistical test for Equality of Averages in a particular data set.
+Nevertheless, applied researchers should be aware that 
+
 For this reason, weaker or approximate notions of ergodicity are sometimes used in applied work:
 \begin{itemize}
 \item ergodicity of the mean: does the empirical time average of a quantity of interest equal to it's empirical mean?
@@ -619,6 +637,8 @@ They are distinct, and more operational in nature, than the definition of measur
 However this should not preclude their use and more widespread adoption among applied scientists.
 The question of when the statistics of individual trajectories are representative of populations and vice versa is a critical one in many fields.
 The concept of ergodicity too important to be solely an abstraction of mathematics and theoretical physics.
+
+\section{Conclusion}
 
 The papers in this collection:
 \cite{ConnaughtonEtAl_WhatIsErgodicity,PetersAdamou_LeverageEfficiency,FlemingEtAl_ErgodicitySpeedAccuracy,UnderwoodPaillusson_SpectroscopicClassification,VerbruggenEtAl_ModelAgnosticSolutions,AdamouEtAl_TwoGrowthRates,VanhoyweghenEtAl_BeyondAsymptotics,Britto_LikelihoodBasedEstimation,Reichert_StationarityTypicalityErgodicity,Fisher_BeyondParametricErgodicity,PetersAdamou_TimeInterpretation,LucenteEtAl_KhinchinErgodicity,Soysal_ErgodicityAssumptionClimate,BaumannEtAl_ErgodicityReinforcementLearning,GiordanoBlossey_GeneralizedGeometricBrownian,RodriguezRaposoCoelloPulido_ErgodicityTransformation}
