@@ -4,16 +4,89 @@
 @String{ISSUENUMBER  = "42"}
 @String{PAGES  = "xxx-xxx"}
 
-@article{smith2026,
-  author  = {Smith, Alice and Jones, Bob},
-  title   = {First paper in the collection},
-  journal = collectionJournal,
-  year    = collectionYear,
-  volume  = collectionVolume,
-  number  = collectionNumber,
-  pages   = {101--120},
-  doi     = {...}
+@book{breiman1992probability,
+  title     = {Probability},
+  author    = {Breiman, Leo},
+  series    = {Classics in Applied Mathematics},
+  volume    = {7},
+  year      = {1992},
+  publisher = {Society for Industrial and Applied Mathematics},
+  address   = {Philadelphia, PA},
+  isbn      = {978-0-898712-96-4},
+  doi       = {10.1137/1.9781611971286}
 }
+@book{silva2008invitation,
+  title     = {Invitation to Ergodic Theory},
+  author    = {Silva, C{\'e}sar E.},
+  series    = {Student Mathematical Library},
+  volume    = {42},
+  year      = {2008},
+  publisher = {American Mathematical Society},
+  address   = {Providence, RI},
+  isbn      = {978-0-8218-4420-5}
+}
+@book{aaronson1997introduction,
+  title     = {An Introduction to Infinite Ergodic Theory},
+  author    = {Aaronson, Jon},
+  series    = {Mathematical Surveys and Monographs},
+  volume    = {50},
+  year      = {1997},
+  publisher = {American Mathematical Society},
+  address   = {Providence, RI},
+  isbn      = {978-0-8218-0494-0}
+}
+@book{barnsley1988fractals,
+  author    = {Barnsley, Michael F.},
+  title     = {Fractals Everywhere},
+  publisher = {Academic Press},
+  address   = {Boston},
+  year      = {1988},
+  isbn      = {0-12-079062-9}
+}
+@book{Arnold1998,
+  author    = {Arnold, Ludwig},
+  title     = {Random Dynamical Systems},
+  series    = {Springer Monographs in Mathematics},
+  publisher = {Springer-Verlag},
+  address   = {Berlin, Heidelberg},
+  year      = {1998},
+  isbn      = {978-3-540-63758-1},
+  doi       = {10.1007/978-3-662-12878-7}
+}
+
+@article{Birkhoff1931,
+  author  = {Birkhoff, George David},
+  title   = {Proof of the ergodic theorem},
+  journal = {Proceedings of the National Academy of Sciences of the United States of America},
+  year    = {1931},
+  volume  = {17},
+  number  = {12},
+  pages   = {656--660},
+  doi     = {10.1073/pnas.17.12.656}
+}
+
+@article{Simanyi2003,
+  author  = {Sim{\'a}nyi, N{\'a}ndor},
+  title   = {Proof of the {B}oltzmann-{S}inai ergodic hypothesis for typical hard disk systems},
+  journal = {Inventiones mathematicae},
+  year    = {2003},
+  volume  = {154},
+  number  = {1},
+  pages   = {123--178},
+  doi     = {10.1007/s00222-003-0304-9}
+}
+
+@article{TuraevRomKedar1998,
+  author  = {Turaev, Dmitry and Rom-Kedar, Vered},
+  title   = {Elliptic islands appearing in near-ergodic flows},
+  journal = {Nonlinearity},
+  year    = {1998},
+  volume  = {11},
+  number  = {3},
+  pages   = {575--600},
+  doi     = {10.1088/0951-7715/11/3/010}
+}
+
 
 
 @article{solomyak1995random,
@@ -26,6 +99,24 @@
   year={1995},
   publisher={JSTOR}
 }
+
+@unpublished{bakhtin2015topics,
+  author = {Bakhtin, Yuri},
+  title  = {Some Topics in Ergodic Theory},
+  year   = {2015},
+  note   = {Working draft},
+  url    = {https://cims.nyu.edu/~bakhtin/2015-ergodic.pdf}
+}
+
+@book{Petersen_1983, 
+place={Cambridge}, 
+series={Cambridge Studies in Advanced Mathematics}, 
+title={Ergodic Theory}, 
+publisher={Cambridge University Press}, 
+author={Petersen, Karl E.}, year={1983}, 
+collection={Cambridge Studies in Advanced Mathematics}
+}
+
 
 @article{redner1990random,
   title={Random multiplicative processes: An elementary tutorial},
@@ -115,11 +206,21 @@
   year= YEAR
 }
 
-book{durbin2012time,
+@book{durbin2012time,
   title={Time series analysis by state space methods},
   author={Durbin, James and Koopman, Siem Jan},
   year={2012},
   publisher={Oxford University Press (UK)}
+}
+
+@article{UnderwoodPaillusson_SpectroscopicClassification,
+  author  = {Underwood, Nicolas G. and Paillusson, Fabien},
+  title   = {Spectroscopic classification of non-ergodic populations},
+  journal = JOURNALNAME,
+  volume = JOURNALVOLUME,
+  number  = ISSUENUMBER,
+  pages   =  PAGES,
+  year= YEAR
 }
 
 @article{Britto_LikelihoodBasedEstimation,
@@ -132,7 +233,6 @@ book{durbin2012time,
   year= YEAR
 }
 
-
 @article{RodriguezRaposoCoelloPulido_ErgodicityTransformation,
   author  = {Rodriguez Raposo, Carlos and Coello Pulido, Pablo},
   title   = {Ergodicity transformation for additive-ruin wealth dynamic with money borrowing},
@@ -143,15 +243,7 @@ book{durbin2012time,
   year= YEAR
 }
 
-@article{UnderwoodPaillusson_SpectroscopicClassification,
-  author  = {Underwood, Nicolas G. and Paillusson, Fabien},
-  title   = {Spectroscopic classification of non-ergodic populations},
-  journal = JOURNALNAME,
-  volume = JOURNALVOLUME,
-  number  = ISSUENUMBER,
-  pages   =  PAGES,
-  year= YEAR
-}
+
 
 % Replace JOURNALNAME, ISSUENUMBER, and PAGES with final bibliographic details.
 
@@ -218,8 +310,6 @@ book{durbin2012time,
 }
 
 
-
-
 @article{Fisher_BeyondParametricErgodicity,
   author  = {Fisher, Aaron J.},
   title   = {Beyond parametric ergodicity: A framework for structural generalizability},
@@ -261,6 +351,4 @@ book{durbin2012time,
   pages   =  PAGES,
   year= YEAR
 }
-
-
 
